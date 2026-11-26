@@ -443,7 +443,7 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
 
 .cartao-google-area { grid-column: 8 / 13; position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(48px, 6vw, 80px); }
 .premio { display: flex; align-items: center; gap: 24px; max-width: 460px; margin-left: auto; width: 100%; }
-.estatueta { flex: none; width: 64px; height: auto; color: var(--gold); }
+.estatueta { flex: none; width: 92px; height: auto; color: var(--gold); }
 .premio h3 { font-size: var(--step-title); color: var(--paper); }
 .premio p { margin-top: 8px; color: #E6E6E3; }
 .link-claro { color: var(--gold); }
@@ -469,7 +469,7 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
   .porque-texto { padding-bottom: 64px; }
   .cartao-google { max-width: none; margin: 0 auto; transform: rotate(-1deg) translateY(24px); }
   .premio { max-width: none; margin: 0 0 48px; }
-  .estatueta { width: 48px; }
+  .estatueta { width: 60px; }
 }
 
 /* ---------- 8. como funciona ---------- */
