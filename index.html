@@ -143,91 +143,143 @@
       </div>
     </section>
 
-    <!-- ============ 3. CATÁLOGO DE PEDRAS ============ -->
+    <!-- ============ 3. CATÁLOGO DE PEDRAS (vitrine em carrossel) ============ -->
     <section class="pedras secao campo-suave" id="pedras" aria-labelledby="pedras-titulo">
       <div class="pedras-cabeca">
         <div class="revelar">
           <h2 id="pedras-titulo">Granitos e mármores</h2>
-          <p class="lead">Algumas das pedras mais pedidas. Toque em uma para ver como ela fica na sua peça.</p>
+          <p class="lead">Cada pedra ao lado de uma obra feita com ela. Passa sozinho, ou use as setas.</p>
         </div>
-        <div class="filtros revelar" role="group" aria-label="Filtrar pedras">
-          <button type="button" class="chip" aria-pressed="true" data-filtro="todas">Todas</button>
-          <button type="button" class="chip" aria-pressed="false" data-filtro="granito">Granitos</button>
-          <button type="button" class="chip" aria-pressed="false" data-filtro="marmore">Mármores</button>
+        <div class="vitrine-controles revelar">
+          <p class="vitrine-contador" aria-live="polite"><span id="vitrine-atual">1</span> de <span id="vitrine-total">7</span></p>
+          <div class="setas">
+            <button type="button" class="seta" id="vitrine-anterior" aria-label="Pedra anterior"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
+            <button type="button" class="seta" id="vitrine-proxima" aria-label="Próxima pedra"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-seta"/></svg></button>
+          </div>
         </div>
       </div>
 
       <!--
-        TROCAR PEDRAS: cada pedra é um <li>. Para mudar a foto, troque os arquivos em img/pedras/.
-        Para incluir uma pedra nova, copie um <li> inteiro e também adicione a pedra na lista PEDRAS em js/main.js.
+        TROCAR FOTOS DOS PROJETOS: cada slide tem a foto de uma obra (img/projetos/<pedra>-800.webp e -1400.webp)
+        e a amostra da pedra (img/pedras/). Troque pela foto de uma obra real da Japão naquela pedra,
+        ajuste a legenda e apague o aviso "Foto ilustrativa".
+        Para incluir uma pedra nova: copie um <article class="slide"> inteiro e adicione a pedra na lista PEDRAS em js/main.js.
       -->
-      <ul class="pedras-trilho" id="pedras-trilho" role="list">
-        <li class="pedra" data-tipo="granito">
-          <img src="img/pedras/preto-absoluto-480.webp" srcset="img/pedras/preto-absoluto-480.webp 480w, img/pedras/preto-absoluto-900.webp 900w" sizes="(min-width: 900px) 320px, 72vw" width="480" height="480" alt="Superfície polida de granito preto uniforme" loading="lazy">
-          <div class="pedra-texto">
-            <h3>Preto Absoluto</h3>
-            <p><strong>Granito.</strong> Preto uniforme e profundo. Combina com quase tudo e disfarça bem o uso do dia a dia.</p>
-            <button type="button" class="link" data-pedra="preto-absoluto">Ver na minha peça</button>
-          </div>
-        </li>
-        <li class="pedra" data-tipo="granito">
-          <img src="img/pedras/verde-ubatuba-480.webp" srcset="img/pedras/verde-ubatuba-480.webp 480w, img/pedras/verde-ubatuba-900.webp 900w" sizes="(min-width: 900px) 320px, 72vw" width="480" height="480" alt="Granito verde-escuro com pontos dourados" loading="lazy">
-          <div class="pedra-texto">
-            <h3>Verde Ubatuba</h3>
-            <p><strong>Granito.</strong> Verde-escuro com pontos dourados. Um clássico brasileiro, firme para o uso na cozinha.</p>
-            <button type="button" class="link" data-pedra="verde-ubatuba">Ver na minha peça</button>
-          </div>
-        </li>
-        <li class="pedra" data-tipo="granito">
-          <img src="img/pedras/tan-brown-480.webp" srcset="img/pedras/tan-brown-480.webp 480w, img/pedras/tan-brown-900.webp 900w" sizes="(min-width: 900px) 320px, 72vw" width="480" height="480" alt="Granito escuro com grãos grandes cor de cobre" loading="lazy">
-          <div class="pedra-texto">
-            <h3>Tan Brown</h3>
-            <p><strong>Granito.</strong> Fundo escuro com grãos cor de cobre. Fica bonito ao lado de armários de madeira.</p>
-            <button type="button" class="link" data-pedra="tan-brown">Ver na minha peça</button>
-          </div>
-        </li>
-        <li class="pedra" data-tipo="granito">
-          <img src="img/pedras/delicatus-480.webp" srcset="img/pedras/delicatus-480.webp 480w, img/pedras/delicatus-900.webp 900w" sizes="(min-width: 900px) 320px, 72vw" width="480" height="480" alt="Granito branco com traços pretos finos e marcantes" loading="lazy">
-          <div class="pedra-texto">
-            <h3>Delicatus</h3>
-            <p><strong>Granito.</strong> Branco com traços pretos marcantes. Para quem quer uma pedra clara com personalidade.</p>
-            <button type="button" class="link" data-pedra="delicatus">Ver na minha peça</button>
-          </div>
-        </li>
-        <li class="pedra" data-tipo="marmore">
-          <img src="img/pedras/carrara-480.webp" srcset="img/pedras/carrara-480.webp 480w, img/pedras/carrara-900.webp 900w" sizes="(min-width: 900px) 320px, 72vw" width="480" height="480" alt="Mármore branco com veios cinza suaves" loading="lazy">
-          <div class="pedra-texto">
-            <h3>Carrara</h3>
-            <p><strong>Mármore.</strong> Branco com veios cinza suaves. O mármore italiano mais conhecido, lindo em banheiros.</p>
-            <button type="button" class="link" data-pedra="carrara">Ver na minha peça</button>
-          </div>
-        </li>
-        <li class="pedra" data-tipo="marmore">
-          <img src="img/pedras/calacatta-480.webp" srcset="img/pedras/calacatta-480.webp 480w, img/pedras/calacatta-900.webp 900w" sizes="(min-width: 900px) 320px, 72vw" width="480" height="480" alt="Mármore branco luminoso com veios dourados largos" loading="lazy">
-          <div class="pedra-texto">
-            <h3>Calacatta</h3>
-            <p><strong>Mármore.</strong> Branco luminoso com veios dourados largos. Peça de destaque em lavabos e ilhas.</p>
-            <button type="button" class="link" data-pedra="calacatta">Ver na minha peça</button>
-          </div>
-        </li>
-        <li class="pedra" data-tipo="marmore">
-          <img src="img/pedras/nero-marquina-480.webp" srcset="img/pedras/nero-marquina-480.webp 480w, img/pedras/nero-marquina-900.webp 900w" sizes="(min-width: 900px) 320px, 72vw" width="480" height="480" alt="Mármore preto com veios brancos finos" loading="lazy">
-          <div class="pedra-texto">
-            <h3>Nero Marquina</h3>
-            <p><strong>Mármore.</strong> Preto com veios brancos finos. Elegante em lavabos e bancadas de banheiro.</p>
-            <button type="button" class="link" data-pedra="nero-marquina">Ver na minha peça</button>
-          </div>
-        </li>
-      </ul>
+      <div class="vitrine" id="vitrine" aria-roledescription="carrossel" aria-label="Pedras e obras">
+        <div class="vitrine-trilho" id="vitrine-trilho">
 
-      <div class="pedras-pe">
-        <div class="barra" aria-hidden="true"><span class="barra-cheia" id="pedras-progresso"></span></div>
-        <div class="setas">
-          <button type="button" class="seta" data-rolar="-1" aria-label="Pedras anteriores"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
-          <button type="button" class="seta" data-rolar="1" aria-label="Próximas pedras"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-seta"/></svg></button>
+          <article class="slide" aria-roledescription="slide" aria-label="Preto Absoluto">
+            <figure class="slide-obra">
+              <img src="img/projetos/preto-absoluto-800.webp" srcset="img/projetos/preto-absoluto-800.webp 800w, img/projetos/preto-absoluto-1400.webp 1400w" sizes="(min-width: 900px) 60vw, 100vw" width="800" height="874" alt="Cozinha escura com bancada preta" loading="lazy">
+              <figcaption><span class="selo">Foto ilustrativa</span> Cozinha com bancada em granito preto, como o Preto Absoluto.</figcaption>
+            </figure>
+            <div class="slide-pedra">
+              <img src="img/pedras/preto-absoluto-480.webp" srcset="img/pedras/preto-absoluto-480.webp 480w, img/pedras/preto-absoluto-900.webp 900w" sizes="(min-width: 900px) 28vw, 40vw" width="480" height="480" alt="Amostra do granito Preto Absoluto" loading="lazy">
+              <div class="slide-pedra-texto">
+                <h3>Preto Absoluto</h3>
+                <p><strong>Granito.</strong> Preto uniforme e profundo. Combina com quase tudo e disfarça bem o uso do dia a dia.</p>
+                <button type="button" class="link" data-pedra="preto-absoluto">Ver na minha peça</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="slide" aria-roledescription="slide" aria-label="Verde Ubatuba">
+            <figure class="slide-obra">
+              <img src="img/projetos/verde-ubatuba-800.webp" srcset="img/projetos/verde-ubatuba-800.webp 800w, img/projetos/verde-ubatuba-1400.webp 1400w" sizes="(min-width: 900px) 60vw, 100vw" width="800" height="600" alt="Cozinha com armários de madeira e bancada de granito escuro" loading="lazy">
+              <figcaption><span class="selo">Foto ilustrativa</span> Cozinha em L com bancada de granito escuro, no tom do Verde Ubatuba.</figcaption>
+            </figure>
+            <div class="slide-pedra">
+              <img src="img/pedras/verde-ubatuba-480.webp" srcset="img/pedras/verde-ubatuba-480.webp 480w, img/pedras/verde-ubatuba-900.webp 900w" sizes="(min-width: 900px) 28vw, 40vw" width="480" height="480" alt="Amostra do granito Verde Ubatuba" loading="lazy">
+              <div class="slide-pedra-texto">
+                <h3>Verde Ubatuba</h3>
+                <p><strong>Granito.</strong> Verde-escuro com pontos dourados. Um clássico brasileiro, firme para o uso na cozinha.</p>
+                <button type="button" class="link" data-pedra="verde-ubatuba">Ver na minha peça</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="slide" aria-roledescription="slide" aria-label="Tan Brown">
+            <figure class="slide-obra">
+              <img src="img/projetos/tan-brown-800.webp" srcset="img/projetos/tan-brown-800.webp 800w, img/projetos/tan-brown-1400.webp 1400w" sizes="(min-width: 900px) 60vw, 100vw" width="800" height="600" alt="Cozinha com armários de madeira e bancada de granito Tan Brown" loading="lazy">
+              <figcaption><span class="selo">Foto ilustrativa</span> Bancada de cozinha com cuba dupla em Tan Brown.</figcaption>
+            </figure>
+            <div class="slide-pedra">
+              <img src="img/pedras/tan-brown-480.webp" srcset="img/pedras/tan-brown-480.webp 480w, img/pedras/tan-brown-900.webp 900w" sizes="(min-width: 900px) 28vw, 40vw" width="480" height="480" alt="Amostra do granito Tan Brown" loading="lazy">
+              <div class="slide-pedra-texto">
+                <h3>Tan Brown</h3>
+                <p><strong>Granito.</strong> Fundo escuro com grãos cor de cobre. Fica bonito ao lado de armários de madeira.</p>
+                <button type="button" class="link" data-pedra="tan-brown">Ver na minha peça</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="slide" aria-roledescription="slide" aria-label="Delicatus">
+            <figure class="slide-obra">
+              <img src="img/projetos/delicatus-800.webp" srcset="img/projetos/delicatus-800.webp 800w, img/projetos/delicatus-1400.webp 1400w" sizes="(min-width: 900px) 60vw, 100vw" width="800" height="533" alt="Cozinha clara com ilha de pedra branca e banquetas de madeira" loading="lazy">
+              <figcaption><span class="selo">Foto ilustrativa</span> Ilha de cozinha em pedra clara, como o Delicatus.</figcaption>
+            </figure>
+            <div class="slide-pedra">
+              <img src="img/pedras/delicatus-480.webp" srcset="img/pedras/delicatus-480.webp 480w, img/pedras/delicatus-900.webp 900w" sizes="(min-width: 900px) 28vw, 40vw" width="480" height="480" alt="Amostra do granito Delicatus" loading="lazy">
+              <div class="slide-pedra-texto">
+                <h3>Delicatus</h3>
+                <p><strong>Granito.</strong> Branco com traços pretos marcantes. Para quem quer uma pedra clara com personalidade.</p>
+                <button type="button" class="link" data-pedra="delicatus">Ver na minha peça</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="slide" aria-roledescription="slide" aria-label="Carrara">
+            <figure class="slide-obra">
+              <img src="img/projetos/carrara-800.webp" srcset="img/projetos/carrara-800.webp 800w, img/projetos/carrara-1400.webp 1400w" sizes="(min-width: 900px) 60vw, 100vw" width="800" height="534" alt="Banheiro revestido em mármore branco com veios cinza" loading="lazy">
+              <figcaption><span class="selo">Foto ilustrativa</span> Banheiro com bancada e paredes em mármore Carrara.</figcaption>
+            </figure>
+            <div class="slide-pedra">
+              <img src="img/pedras/carrara-480.webp" srcset="img/pedras/carrara-480.webp 480w, img/pedras/carrara-900.webp 900w" sizes="(min-width: 900px) 28vw, 40vw" width="480" height="480" alt="Amostra do mármore Carrara" loading="lazy">
+              <div class="slide-pedra-texto">
+                <h3>Carrara</h3>
+                <p><strong>Mármore.</strong> Branco com veios cinza suaves. O mármore italiano mais conhecido, lindo em banheiros.</p>
+                <button type="button" class="link" data-pedra="carrara">Ver na minha peça</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="slide" aria-roledescription="slide" aria-label="Calacatta">
+            <figure class="slide-obra">
+              <img src="img/projetos/calacatta-800.webp" srcset="img/projetos/calacatta-800.webp 800w, img/projetos/calacatta-1400.webp 1400w" sizes="(min-width: 900px) 60vw, 100vw" width="800" height="533" alt="Cozinha branca com ilha revestida em pedra branca de veios" loading="lazy">
+              <figcaption><span class="selo">Foto ilustrativa</span> Ilha de cozinha com a pedra descendo até o chão, no estilo Calacatta.</figcaption>
+            </figure>
+            <div class="slide-pedra">
+              <img src="img/pedras/calacatta-480.webp" srcset="img/pedras/calacatta-480.webp 480w, img/pedras/calacatta-900.webp 900w" sizes="(min-width: 900px) 28vw, 40vw" width="480" height="480" alt="Amostra do mármore Calacatta" loading="lazy">
+              <div class="slide-pedra-texto">
+                <h3>Calacatta</h3>
+                <p><strong>Mármore.</strong> Branco luminoso com veios dourados largos. Peça de destaque em lavabos e ilhas.</p>
+                <button type="button" class="link" data-pedra="calacatta">Ver na minha peça</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="slide" aria-roledescription="slide" aria-label="Nero Marquina">
+            <figure class="slide-obra">
+              <img src="img/projetos/nero-marquina-800.webp" srcset="img/projetos/nero-marquina-800.webp 800w, img/projetos/nero-marquina-1400.webp 1400w" sizes="(min-width: 900px) 60vw, 100vw" width="800" height="424" alt="Banheiro com parede de mármore preto de veios brancos e duas cubas" loading="lazy">
+              <figcaption><span class="selo">Foto ilustrativa</span> Banheiro com parede em mármore preto de veios brancos, como o Nero Marquina.</figcaption>
+            </figure>
+            <div class="slide-pedra">
+              <img src="img/pedras/nero-marquina-480.webp" srcset="img/pedras/nero-marquina-480.webp 480w, img/pedras/nero-marquina-900.webp 900w" sizes="(min-width: 900px) 28vw, 40vw" width="480" height="480" alt="Amostra do mármore Nero Marquina" loading="lazy">
+              <div class="slide-pedra-texto">
+                <h3>Nero Marquina</h3>
+                <p><strong>Mármore.</strong> Preto com veios brancos finos. Elegante em lavabos e bancadas de banheiro.</p>
+                <button type="button" class="link" data-pedra="nero-marquina">Ver na minha peça</button>
+              </div>
+            </div>
+          </article>
+
         </div>
       </div>
-      <p class="pedras-aviso">Outras pedras e a disponibilidade de cada uma são confirmadas no orçamento.</p>
+
+      <div class="vitrine-pe">
+        <div class="barra" aria-hidden="true"><span class="barra-cheia" id="vitrine-tempo"></span></div>
+        <p class="pedras-aviso">Outras pedras e a disponibilidade de cada uma são confirmadas no orçamento.</p>
+      </div>
     </section>
 
     <!-- ============ 4. GALERIA ============ -->
@@ -468,7 +520,7 @@
           <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Jap%C3%A3o+Granitos+e+M%C3%A1rmores+Piracicaba" target="_blank" rel="noopener">Avaliações no Google</a></p>
         </div>
       </div>
-      <p class="rodape-legal">© <span id="ano">2026</span> Japão Granitos &amp; Mármores. Fotos das pedras: James St. John, Crocodile Rocks Natural Stone e devanstone Co. (CC BY 2.0). Fotos de ambientes: Unsplash. <a href="CREDITOS.md">Créditos completos</a>.</p>
+      <p class="rodape-legal">© <span id="ano">2026</span> Japão Granitos &amp; Mármores. Fotos das pedras e de obras: James St. John, Crocodile Rocks Natural Stone, devanstone Co., granite-charlotte, Tomtom Suites e Rooky Yootz (CC BY 2.0). Fotos de ambientes: Unsplash. <a href="CREDITOS.md">Créditos completos</a>.</p>
     </div>
   </footer>
 
@@ -476,6 +528,21 @@
   <a class="whats-fixo" data-whats href="https://wa.me/5519987415983?text=Ol%C3%A1%2C%20Jap%C3%A3o%20Granitos!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" aria-label="Conversar com a Japão no WhatsApp">
     <svg aria-hidden="true"><use href="#i-whats"/></svg>
   </a>
+
+  <!-- ============ ZOOM DAS IMAGENS ============ -->
+  <div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="Imagem ampliada" hidden>
+    <div class="zoom-palco" id="zoom-palco">
+      <img id="zoom-img" alt="" draggable="false">
+    </div>
+    <p class="zoom-legenda" id="zoom-legenda"></p>
+    <div class="zoom-botoes">
+      <button type="button" class="zoom-botao" id="zoom-menos" aria-label="Diminuir zoom">−</button>
+      <button type="button" class="zoom-botao" id="zoom-mais" aria-label="Aumentar zoom">+</button>
+      <button type="button" class="zoom-botao" id="zoom-fechar" aria-label="Fechar">×</button>
+    </div>
+    <button type="button" class="zoom-botao zoom-nav zoom-ant" id="zoom-ant" aria-label="Imagem anterior"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
+    <button type="button" class="zoom-botao zoom-nav zoom-prox" id="zoom-prox" aria-label="Próxima imagem"><svg aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-seta"/></svg></button>
+  </div>
 
   <!-- Ícones usados no site -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">

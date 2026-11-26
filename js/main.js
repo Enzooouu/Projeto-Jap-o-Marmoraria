@@ -102,8 +102,6 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   atualizar();
 }
 
-trilho($('#pedras-trilho'), $('#pedras-progresso'), $$('[data-rolar]'));
-
 (() => {
   const t = $('#etapas-trilho');
   if (!t) return;
@@ -118,18 +116,252 @@ trilho($('#pedras-trilho'), $('#pedras-progresso'), $$('[data-rolar]'));
   trilho(t, $('#etapas-progresso'), $$('[data-rolar-etapas]'), marcar);
 })();
 
-/* ---------- filtro do catálogo ---------- */
+/* ---------- barra do topo: transparente no início, pílula com borda e sombra ao rolar ---------- */
 (() => {
-  const chips = $$('[data-filtro]');
-  const pedras = $$('.pedra');
-  chips.forEach((chip) => chip.addEventListener('click', () => {
-    const f = chip.dataset.filtro;
-    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
-    pedras.forEach((p) => { p.hidden = f !== 'todas' && p.dataset.tipo !== f; });
-    const t = $('#pedras-trilho');
-    t.scrollTo({ left: 0 });
-    t.dispatchEvent(new Event('scroll'));
-  }));
+  const topo = $('.topo');
+  if (!topo) return;
+  const marcar = () => topo.classList.toggle('rolou', window.scrollY > 12);
+  window.addEventListener('scroll', marcar, { passive: true });
+  marcar();
+})();
+
+/* ---------- vitrine de pedras: carrossel infinito, avança sozinho a cada 11 segundos ---------- */
+(() => {
+  const vitrine = $('#vitrine');
+  const trilhoEl = $('#vitrine-trilho');
+  if (!vitrine || !trilhoEl) return;
+  const INTERVALO = 11000;
+  const originais = $$('.slide', trilhoEl);
+  const total = originais.length;
+  // cópias nas pontas para o giro não ter fim: [último] 1 2 3 … 7 [primeiro]
+  const primeiroClone = originais[0].cloneNode(true);
+  const ultimoClone = originais[total - 1].cloneNode(true);
+  [primeiroClone, ultimoClone].forEach((c) => { c.setAttribute('aria-hidden', 'true'); c.inert = true; c.classList.add('clone'); });
+  trilhoEl.appendChild(primeiroClone);
+  trilhoEl.insertBefore(ultimoClone, originais[0]);
+
+  const atualEl = $('#vitrine-atual');
+  const tempoEl = $('#vitrine-tempo');
+  $('#vitrine-total').textContent = total;
+  let i = 1;            // posição no trilho (1 = primeira pedra real)
+  let ocupado = false;
+  let pausado = false;
+  let inicio = performance.now();
+  let restante = INTERVALO;
+
+  const posicionar = (animar) => {
+    trilhoEl.style.transition = animar && !reduzir ? 'transform .9s cubic-bezier(.65,0,.25,1)' : 'none';
+    trilhoEl.style.transform = `translate3d(${-i * 100}%, 0, 0)`;
+    const real = ((i - 1) % total + total) % total;
+    atualEl.textContent = real + 1;
+    $$('.slide', trilhoEl).forEach((sl, k) => sl.classList.toggle('ativo', k === i));
+    originais.forEach((sl, k) => { sl.inert = k !== real; });
+  };
+  const ir = (passo) => {
+    if (ocupado) return;
+    i += passo;
+    ocupado = !reduzir;
+    posicionar(true);
+    if (reduzir) corrigirPonta();
+    reiniciarTempo();
+  };
+  const corrigirPonta = () => {
+    if (i === total + 1) { i = 1; posicionar(false); }
+    if (i === 0) { i = total; posicionar(false); }
+    ocupado = false;
+  };
+  trilhoEl.addEventListener('transitionend', (e) => { if (e.target === trilhoEl) corrigirPonta(); });
+
+  const reiniciarTempo = () => { inicio = performance.now(); restante = INTERVALO; };
+  const relogio = (agora) => {
+    if (!pausado) {
+      const feito = Math.min(1, (agora - inicio) / restante);
+      tempoEl.style.transform = `scaleX(${feito})`;
+      if (feito >= 1) ir(1);
+    }
+    requestAnimationFrame(relogio);
+  };
+
+  // pausa enquanto o mouse está em cima, o foco está dentro ou a aba está escondida
+  let pausadoEm = 0;
+  const pausar = () => { if (!pausado) { pausado = true; pausadoEm = performance.now(); } };
+  const continuar = () => { if (pausado) { pausado = false; inicio += performance.now() - pausadoEm; } };
+  vitrine.addEventListener('mouseenter', pausar);
+  vitrine.addEventListener('mouseleave', continuar);
+  vitrine.addEventListener('focusin', pausar);
+  vitrine.addEventListener('focusout', continuar);
+  document.addEventListener('visibilitychange', () => (document.hidden ? pausar() : continuar()));
+
+  $('#vitrine-proxima').addEventListener('click', () => ir(1));
+  $('#vitrine-anterior').addEventListener('click', () => ir(-1));
+
+  // arrastar com o dedo
+  let x0 = null;
+  vitrine.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') x0 = e.clientX; });
+  vitrine.addEventListener('pointerup', (e) => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) ir(dx < 0 ? 1 : -1);
+  });
+  vitrine.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') ir(1);
+    if (e.key === 'ArrowLeft') ir(-1);
+  });
+
+  posicionar(false);
+  requestAnimationFrame(relogio);
+})();
+
+/* ---------- zoom: toda imagem abre ampliada, com zoom e arraste ---------- */
+(() => {
+  const caixa = $('#zoom');
+  const palco = $('#zoom-palco');
+  const img = $('#zoom-img');
+  const legenda = $('#zoom-legenda');
+  if (!caixa) return;
+  const fora = '.marca-img, .rodape-logo, .amostra img, .zoom img, .clone img';
+  const lista = () => $$('main img, footer img').filter((el) => !el.matches(fora));
+  let atuais = [];
+  let pos = 0;
+  let escala = 1, tx = 0, ty = 0;
+  let origem = null;
+
+  const maior = (el) => {
+    const ss = el.getAttribute('srcset');
+    if (!ss) return el.currentSrc || el.src;
+    return ss.split(',').map((p) => p.trim().split(/\s+/)).sort((a, b) => parseInt(b[1]) - parseInt(a[1]))[0][0];
+  };
+  const aplicar = (suave) => {
+    img.style.transition = suave && !reduzir ? 'transform .25s ease' : 'none';
+    img.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${escala})`;
+    caixa.classList.toggle('ampliada', escala > 1.01);
+  };
+  const limitar = () => {
+    const r = palco.getBoundingClientRect();
+    const w = img.offsetWidth * escala, h = img.offsetHeight * escala;
+    const mx = Math.max(0, (w - r.width) / 2), my = Math.max(0, (h - r.height) / 2);
+    tx = Math.min(mx, Math.max(-mx, tx)); ty = Math.min(my, Math.max(-my, ty));
+  };
+  const zoomEm = (nova, cx, cy) => {
+    nova = Math.min(5, Math.max(1, nova));
+    const r = palco.getBoundingClientRect();
+    const px = (cx ?? r.left + r.width / 2) - (r.left + r.width / 2);
+    const py = (cy ?? r.top + r.height / 2) - (r.top + r.height / 2);
+    tx = px - (px - tx) * (nova / escala);
+    ty = py - (py - ty) * (nova / escala);
+    escala = nova;
+    if (escala === 1) { tx = 0; ty = 0; }
+    limitar(); aplicar(true);
+  };
+  const mostrar = (k) => {
+    pos = (k + atuais.length) % atuais.length;
+    const el = atuais[pos];
+    escala = 1; tx = 0; ty = 0; aplicar(false);
+    img.src = maior(el);
+    img.alt = el.alt || '';
+    legenda.textContent = el.alt || '';
+    caixa.classList.toggle('so-uma', atuais.length < 2);
+  };
+  const abrir = (el) => {
+    atuais = lista();
+    origem = document.activeElement;
+    mostrar(atuais.indexOf(el));
+    caixa.hidden = false;
+    document.documentElement.classList.add('zoom-aberto');
+    $('#zoom-fechar').focus();
+  };
+  const fechar = () => {
+    caixa.hidden = true;
+    document.documentElement.classList.remove('zoom-aberto');
+    img.removeAttribute('src');
+    if (origem && origem.focus) origem.focus();
+  };
+
+  // deixa as imagens clicáveis e acessíveis pelo teclado
+  lista().forEach((el) => {
+    el.classList.add('ampliavel');
+    if (el.closest('a, button, label')) return;
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', `Ampliar imagem: ${el.alt || 'foto'}`);
+  });
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('img.ampliavel');
+    if (el && !el.closest('.clone')) { e.preventDefault(); abrir(el); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!caixa.hidden) {
+      if (e.key === 'Escape') fechar();
+      if (e.key === 'ArrowRight') mostrar(pos + 1);
+      if (e.key === 'ArrowLeft') mostrar(pos - 1);
+      if (e.key === '+' || e.key === '=') zoomEm(escala * 1.5);
+      if (e.key === '-') zoomEm(escala / 1.5);
+      if (e.key === 'Tab') { // mantém o foco dentro da janela
+        const f = $$('button', caixa).filter((b) => b.offsetParent);
+        if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+      }
+      return;
+    }
+    const el = document.activeElement;
+    if (el && el.classList && el.classList.contains('ampliavel') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); abrir(el); }
+  });
+
+  $('#zoom-fechar').addEventListener('click', fechar);
+  $('#zoom-mais').addEventListener('click', () => zoomEm(escala * 1.5));
+  $('#zoom-menos').addEventListener('click', () => zoomEm(escala / 1.5));
+  $('#zoom-prox').addEventListener('click', () => mostrar(pos + 1));
+  $('#zoom-ant').addEventListener('click', () => mostrar(pos - 1));
+  palco.addEventListener('click', (e) => { if (e.target === palco && escala === 1) fechar(); });
+  palco.addEventListener('dblclick', (e) => zoomEm(escala > 1 ? 1 : 2.5, e.clientX, e.clientY));
+  palco.addEventListener('wheel', (e) => { e.preventDefault(); zoomEm(escala * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY); }, { passive: false });
+
+  // arrastar (mouse ou um dedo) e pinça (dois dedos)
+  const toques = new Map();
+  let arraste = null, pinca = null, ultimoToque = 0;
+  palco.addEventListener('pointerdown', (e) => {
+    palco.setPointerCapture(e.pointerId);
+    toques.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (toques.size === 2) {
+      const [a, b] = [...toques.values()];
+      pinca = { d: Math.hypot(a.x - b.x, a.y - b.y), e: escala };
+      arraste = null;
+    } else {
+      arraste = { x: e.clientX, y: e.clientY, tx, ty, moveu: false };
+      // toque duplo no celular
+      const agora = Date.now();
+      if (e.pointerType !== 'mouse' && agora - ultimoToque < 300) zoomEm(escala > 1 ? 1 : 2.5, e.clientX, e.clientY);
+      ultimoToque = agora;
+    }
+  });
+  palco.addEventListener('pointermove', (e) => {
+    if (!toques.has(e.pointerId)) return;
+    toques.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinca && toques.size === 2) {
+      const [a, b] = [...toques.values()];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      escala = Math.min(5, Math.max(1, pinca.e * d / pinca.d));
+      if (escala === 1) { tx = 0; ty = 0; }
+      limitar(); aplicar(false);
+    } else if (arraste) {
+      const dx = e.clientX - arraste.x, dy = e.clientY - arraste.y;
+      if (Math.abs(dx) + Math.abs(dy) > 4) arraste.moveu = true;
+      if (escala > 1) { tx = arraste.tx + dx; ty = arraste.ty + dy; limitar(); aplicar(false); }
+    }
+  });
+  const soltar = (e) => {
+    const a = arraste;
+    toques.delete(e.pointerId);
+    if (toques.size < 2) pinca = null;
+    // sem zoom, arrastar para o lado troca de imagem
+    if (a && escala === 1 && a.moveu) {
+      const dx = e.clientX - a.x;
+      if (Math.abs(dx) > 60) mostrar(pos + (dx < 0 ? 1 : -1));
+    }
+    arraste = null;
+  };
+  palco.addEventListener('pointerup', soltar);
+  palco.addEventListener('pointercancel', soltar);
 })();
 
 /* ---------- simulador de orçamento ---------- */

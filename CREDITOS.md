@@ -34,3 +34,17 @@ Licença: https://creativecommons.org/licenses/by/2.0/
 | `galeria-5-*.webp` | https://images.unsplash.com/photo-1556185781-a47769abb7ee |
 
 Licença: https://unsplash.com/license
+
+## Fotos de obras do carrossel de pedras (`img/projetos/`) — todas provisórias
+
+Nenhuma é obra da Japão. Troque cada uma por uma foto real de obra feita naquela pedra.
+
+| Arquivo | Origem | Autor | Licença |
+| --- | --- | --- | --- |
+| `preto-absoluto-*.webp` | https://images.unsplash.com/photo-1622372738946-62e02505feb3 | Unsplash | Licença Unsplash |
+| `verde-ubatuba-*.webp` | "Charlotte Granite Kitchens" — https://www.flickr.com/photos/46317749@N02/ | granite-charlotte | CC BY 2.0 |
+| `tan-brown-*.webp` | "Tan Brown Granite Countertops installed in Charlotte" — https://www.flickr.com/photos/46317749@N02/ | granite-charlotte | CC BY 2.0 |
+| `delicatus-*.webp` | https://images.unsplash.com/photo-1600585152220-90363fe7e115 | Unsplash | Licença Unsplash |
+| `carrara-*.webp` | "Tomtom Suites" — https://www.flickr.com/photos/44896043@N07/ | Tomtom Suites | CC BY 2.0 |
+| `calacatta-*.webp` | https://images.unsplash.com/photo-1556912173-3bb406ef7e77 | Unsplash | Licença Unsplash |
+| `nero-marquina-*.webp` | "Client Work - Bathroom" — https://www.flickr.com/photos/91473712@N08/ | Rooky Yootz | CC BY 2.0 |
