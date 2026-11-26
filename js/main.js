@@ -239,7 +239,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   const img = $('#zoom-img');
   const legenda = $('#zoom-legenda');
   if (!caixa) return;
-  const fora = '.marca-img, .rodape-logo, .amostra img, .zoom img, .clone img, .slide:not(.ativo) img';
+  const fora = '.hero-foto img, .marca-img, .rodape-logo, .amostra img, .zoom img, .clone img, .slide:not(.ativo) img';
   const visivel = (el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
   const todas = () => $$('main img, footer img').filter((el) => !el.matches(fora));
   // na navegação entram só as fotos que estão de fato na tela (nada de cópia escondida)
