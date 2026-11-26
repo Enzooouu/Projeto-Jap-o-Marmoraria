@@ -6,21 +6,21 @@
 
 :root {
   /* Cores */
-  --bg: #F5F5F3;          /* fundo off-white, neutro como pedra clara */
-  --surface: #E9E8E5;     /* um tom de pedra clara para separar áreas */
-  --ink: #1B1916;         /* texto quase preto */
-  --muted: #57524B;       /* texto secundário (contraste acima de 4.5:1) */
-  --gold: #BF9B4B;        /* dourado principal (botões, detalhes) */
-  --gold-ink: #7A5E1F;    /* dourado escuro para links (legível em fundo claro) */
-  --gold-soft: #D9C08A;   /* dourado claro, para fundo escuro */
-  --red: #C8102E;         /* vermelho: só a bolinha */
-  --dark: #1B1916;
-  --dark-2: #2A2723;
-  --paper: #FCFCFB;
+  --bg: #FFFFFF;          /* branco, igual ao fundo da logo */
+  --surface: #F3F2EF;     /* um tom de pedra clara para separar áreas */
+  --ink: #1A1A18;         /* grafite: texto principal */
+  --muted: #5C5A55;       /* texto secundário (contraste acima de 4.5:1) */
+  --gold: #F9D004;        /* amarelo Japão, tirado da logo (botões, faixas) */
+  --gold-ink: #7A6000;    /* ouro escuro: links e detalhes sobre fundo claro */
+  --gold-soft: #F9D004;   /* amarelo como texto, só sobre fundo escuro */
+  --red: #DD002B;         /* vermelho da bolinha da logo */
+  --dark: #1A1A18;
+  --dark-2: #2B2B28;
+  --paper: #FFFFFF;
   --whats: #25D366;
 
   /* Fontes */
-  --font-display: "Bodoni Moda", "Didot", "Times New Roman", serif;
+  --font-display: "Josefin Sans", "Century Gothic", "Futura", sans-serif;
   --font-text: "Jost", "Helvetica Neue", Arial, sans-serif;
 
   /* Tamanhos de texto (poucos passos, sempre os mesmos) */
@@ -48,7 +48,7 @@
 
 /* ---------- base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 104px; }
 body {
   margin: 0;
   background: var(--bg);
@@ -71,14 +71,13 @@ button, input, select { font: inherit; color: inherit; }
 
 h1, h2, .rodape-nome, .nota-grande {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-optical-sizing: auto;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.05;
   text-wrap: balance;
 }
 h2 { font-size: var(--step-head); }
-h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em; line-height: 1.1; }
+h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line-height: 1.15; }
 .lead { font-size: var(--step-lead); line-height: 1.45; max-width: 36ch; margin-top: 20px; color: var(--ink); }
 
 .pular {
@@ -103,7 +102,7 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
   font-weight: 500; font-size: var(--step-body); text-decoration: none; cursor: pointer;
   transition: transform .2s var(--ease), background-color .2s var(--ease);
 }
-.botao:hover { background: #CDAA5C; }
+.botao:hover { background: #EAC300; }
 .botao:active { transform: scale(.97); }
 .botao .icone { width: 22px; height: 22px; flex: none; }
 .botao-pequeno { min-height: 44px; padding: 0 20px; font-size: var(--step-small); }
@@ -124,12 +123,12 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
 /* ---------- topo ---------- */
 .topo { position: sticky; top: 0; z-index: 50; background: var(--bg); }
 .topo-barra {
-  display: flex; align-items: center; gap: 24px;
+  display: flex; align-items: center; gap: 24px; min-height: 96px;
   max-width: calc(var(--max) + 2 * var(--m)); margin: 0 auto;
   padding: 14px var(--m);
 }
 .marca { display: inline-flex; align-items: center; text-decoration: none; min-height: 44px; margin-right: auto; }
-.marca-img { width: auto; height: 44px; border-radius: var(--r-xs); }
+.marca-img { width: auto; height: 80px; mix-blend-mode: multiply; border-radius: var(--r-xs); }
 .marca-img + .marca-texto { display: none; }
 .marca-texto {
   font-family: var(--font-text); font-weight: 500; font-size: 1.125rem;
@@ -164,6 +163,7 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
   .menu a:hover { background: var(--surface); }
   .menu a::after { display: none; }
   .marca-texto { font-size: .95rem; letter-spacing: .1em; white-space: nowrap; }
+  .marca-img { height: 64px; }
   .topo-whats { display: none; }
 }
 
@@ -172,7 +172,7 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
   position: relative;
   margin: 0 var(--m);
   max-width: var(--max);
-  height: min(calc(100svh - 96px), 900px);
+  height: min(calc(100svh - 124px), 900px);
   min-height: 520px;
   border-radius: var(--r-panel);
   overflow: hidden;
@@ -198,6 +198,7 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
 .hero-nota { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--paper); text-decoration: none; font-size: var(--step-small); }
 .hero-nota:hover { text-decoration: underline; text-underline-offset: 5px; }
 .estrelas { display: inline-flex; gap: 2px; color: var(--gold); }
+.estrelas-grandes { color: #E0B800; }
 .estrelas svg { width: 18px; height: 18px; }
 
 @media (max-width: 640px) {
@@ -211,7 +212,7 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
 .faixa { overflow: hidden; margin: var(--gap-secao) var(--m) 0; border-radius: var(--r-xs); }
 .faixa-trilho {
   display: flex; align-items: center; width: max-content;
-  font-family: var(--font-display); font-weight: 500; letter-spacing: -0.02em;
+  font-family: var(--font-display); font-weight: 300; letter-spacing: 0;
   font-size: var(--step-hero); line-height: 1.1; color: var(--ink);
   animation: correr 48s linear infinite;
 }
@@ -227,7 +228,7 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
 @media (max-width: 860px) { .servicos-cabeca, .orcamento-cabeca { display: block; } .servicos-cabeca .lead, .orcamento-cabeca .lead { margin-top: 20px; } }
 .servicos-corpo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-top: clamp(48px, 6vw, 96px); }
 .servicos-palco {
-  grid-column: 1 / 7; position: sticky; top: 96px; align-self: start;
+  grid-column: 1 / 7; position: sticky; top: 124px; align-self: start;
   aspect-ratio: 4 / 5; max-height: calc(100svh - 128px);
   border-radius: var(--r-panel); overflow: hidden; background: var(--surface);
 }
@@ -355,7 +356,7 @@ h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em
   margin-top: clamp(40px, 5vw, 72px);
 }
 .sim-previa {
-  grid-column: 1 / 7; align-self: start; position: sticky; top: 96px;
+  grid-column: 1 / 7; align-self: start; position: sticky; top: 124px;
   --pad: 16px;
   background: var(--surface); border-radius: calc(var(--r-img) + var(--pad)); padding: var(--pad);
 }
@@ -444,7 +445,13 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
 .razoes h3 { font-size: var(--step-title); color: var(--gold-soft); }
 .razoes p { margin-top: 8px; max-width: 40ch; color: #E6E6E3; }
 
-.cartao-google-area { grid-column: 8 / 13; position: relative; display: flex; align-items: flex-end; }
+.cartao-google-area { grid-column: 8 / 13; position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(48px, 6vw, 80px); }
+.premio { display: flex; align-items: center; gap: 24px; max-width: 460px; margin-left: auto; width: 100%; }
+.estatueta { flex: none; width: 92px; height: auto; color: var(--gold); }
+.premio h3 { font-size: var(--step-title); color: var(--paper); }
+.premio p { margin-top: 8px; color: #E6E6E3; }
+.link-claro { color: var(--gold); }
+.link-claro:hover { color: var(--paper); }
 .cartao-google {
   --pad: clamp(28px, 4vw, 56px);
   width: 100%; max-width: 460px; margin-left: auto;
@@ -455,7 +462,7 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
   text-align: center;
 }
 .cartao-google-rotulo { font-size: var(--step-body); font-weight: 500; }
-.nota-grande { font-size: clamp(6rem, 3.5rem + 7vw, 10rem); line-height: .9; margin-top: 18px; letter-spacing: -0.04em; }
+.nota-grande { font-size: clamp(6rem, 3.5rem + 7vw, 10rem); line-height: .9; margin-top: 18px; letter-spacing: -0.02em; }
 .estrelas-grandes { justify-content: center; margin-top: 14px; gap: 6px; }
 .estrelas-grandes svg { width: 30px; height: 30px; }
 .nota-total { margin-top: 14px; font-size: var(--step-lead); }
@@ -465,6 +472,8 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
   .porque { display: block; }
   .porque-texto { padding-bottom: 64px; }
   .cartao-google { max-width: none; margin: 0 auto; transform: rotate(-1deg) translateY(24px); }
+  .premio { max-width: none; margin: 0 0 48px; }
+  .estatueta { width: 60px; }
 }
 
 /* ---------- 8. como funciona ---------- */
@@ -532,6 +541,7 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
   padding: var(--pad); display: flex; flex-direction: column;
 }
 .rodape-nome { font-size: var(--step-head); }
+.rodape-logo { width: clamp(120px, 14vw, 180px); height: auto; mix-blend-mode: multiply; }
 .rodape-nome .sol { width: .2em; height: .2em; }
 .rodape-menu { display: flex; flex-direction: column; align-items: flex-start; margin-top: 40px; }
 .rodape-menu a {

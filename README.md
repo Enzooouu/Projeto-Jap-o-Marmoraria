@@ -77,10 +77,8 @@ Tudo que precisa ser trocado está marcado no código com um comentário que com
 **`TROCAR`**. No VS Code, aperte `Ctrl + Shift + F` e procure por `TROCAR` para achar todos.
 
 ### A logo
-Salve o arquivo da logo como **`img/logo.png`** (de preferência com fundo transparente,
-uns 360 × 96 pixels). Ela aparece sozinha no topo do site; o texto "JAPÃO GRANITOS"
-que está lá agora some automaticamente. Se a logo tiver outro nome ou formato (ex.: `logo.svg`),
-troque `img/logo.png` no `index.html` (procure `marca-img`).
+A logo já está em `img/logo.png` (recortada da imagem que o dono usa). Se conseguir o
+arquivo original em alta qualidade, substitua mantendo o mesmo nome.
 
 ### As fotos
 Troque os arquivos dentro de `img/fotos/` **mantendo exatamente o mesmo nome**.
@@ -108,9 +106,10 @@ Para mudar uma pedra:
 - WhatsApp: no `index.html` procure `5519987415983` e troque em todos os lugares;
   no `js/main.js` troque a linha `const WHATSAPP = '5519987415983';`.
 - Endereço e horário: estão no `index.html` nas seções `ENDEREÇO` e `RODAPÉ`.
+- Prêmio "Melhores do Ramo em Piracicaba": está no `index.html` dentro da seção `POR QUE A JAPÃO` (procure `premio`). Atualize o ano quando houver um prêmio mais recente.
 
 ### Cores
-No começo do `css/style.css` ficam as variáveis de cor (`--gold` é o dourado,
+No começo do `css/style.css` ficam as variáveis de cor (`--gold` é o amarelo da logo,
 `--red` é o vermelho da bolinha, `--ink` é o texto). Troque ali e o site inteiro muda.
 
 ---
