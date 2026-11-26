@@ -372,7 +372,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .botao-insta:hover { background: var(--dark-2); }
 .mosaico {
   display: grid; grid-template-columns: repeat(12, 1fr);
-  column-gap: clamp(20px, 3vw, 40px); row-gap: clamp(32px, 4vw, 56px);
+  column-gap: clamp(24px, 4.5vw, 72px); row-gap: clamp(48px, 12svh, 130px); /* respiro proporcional à altura da tela */
   align-items: start; margin-top: clamp(40px, 5vw, 72px);
 }
 .obra-foto { border-radius: var(--r-img); overflow: hidden; background: var(--surface); }
@@ -384,9 +384,11 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 /* 3 colunas, com a do meio um pouco mais baixa: as fotos continuam desencontradas, mas a seção cabe em 2 telas */
 .mosaico .obra { grid-column: span 4; }
 .mosaico .obra h3 { font-size: clamp(1.25rem, 1.05rem + .6vw, 1.6rem); }
-.m-b, .m-e { margin-top: clamp(32px, 5vw, 72px); }
-.m-a .obra-foto, .m-c .obra-foto, .m-e .obra-foto { aspect-ratio: 4 / 3; }
-.m-b .obra-foto, .m-d .obra-foto, .m-f .obra-foto { aspect-ratio: 5 / 4; }
+/* cada coluna começa numa altura: fotos espalhadas pelas 2 telas */
+.m-b, .m-e { margin-top: clamp(40px, 13svh, 140px); }
+.m-c, .m-f { margin-top: clamp(16px, 5svh, 56px); }
+.m-a .obra-foto, .m-c .obra-foto, .m-e .obra-foto { aspect-ratio: 1 / 1; }
+.m-b .obra-foto, .m-d .obra-foto, .m-f .obra-foto { aspect-ratio: 4 / 3; }
 .nota-prototipo { margin-top: 40px; font-size: var(--step-small); color: var(--muted); max-width: 60ch; }
 
 @media (max-width: 860px) {
@@ -396,6 +398,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   .mosaico .obra { grid-column: auto; margin-top: 0; }
   .mosaico .obra-foto { aspect-ratio: 3 / 4; }
   .mosaico .m-b, .mosaico .m-d, .mosaico .m-f { margin-top: 48px; }
+  .mosaico .m-c, .mosaico .m-e { margin-top: 0; }
   .obra h3 { font-size: 1.15rem; }
 }
 
