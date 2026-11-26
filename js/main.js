@@ -152,11 +152,13 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   let devagar = false, parado = false;
 
   const deslocamento = () => {
-    const w = slides[0].getBoundingClientRect().width;
+    const w = slides[0].offsetWidth; // largura real, sem contar a redução das laterais
     const gap = parseFloat(getComputedStyle(trilhoEl).columnGap) || 0;
     return (vitrine.clientWidth - w) / 2 - i * (w + gap);
   };
   const posicionar = (animar) => {
+    // no salto invisível das pontas, nada anima (nem o tamanho dos slides)
+    if (!animar) trilhoEl.classList.add('sem-anim');
     trilhoEl.style.transition = animar && !reduzir ? 'transform .9s cubic-bezier(.65,0,.25,1)' : 'none';
     trilhoEl.style.transform = `translate3d(${deslocamento()}px, 0, 0)`;
     const real = ((i - N) % total + total) % total;
@@ -164,10 +166,13 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
     slides.forEach((sl, k) => {
       const ativo = k === i;
       sl.classList.toggle('ativo', ativo);
+      sl.classList.toggle('antes', k < i);
+      sl.classList.toggle('depois', k > i);
       // só o slide do meio entra na leitura de tela e no Tab; os das laterais servem para clicar e ir até eles
       if (ativo) sl.removeAttribute('aria-hidden'); else sl.setAttribute('aria-hidden', 'true');
       $$('a, button, img[tabindex]', sl).forEach((f) => { f.tabIndex = ativo ? 0 : -1; });
     });
+    if (!animar) { void trilhoEl.offsetWidth; requestAnimationFrame(() => trilhoEl.classList.remove('sem-anim')); }
   };
   const corrigirPonta = () => {
     if (i >= total + N) { i -= total; posicionar(false); }

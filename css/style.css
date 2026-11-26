@@ -292,22 +292,30 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   overflow: hidden; touch-action: pan-y;
 }
 .vitrine-trilho { display: flex; column-gap: clamp(20px, 3vw, 40px); will-change: transform; }
+/* as pedras das laterais ficam menores e apagadas, para não puxar a atenção da do meio */
 .slide {
   flex: 0 0 var(--slide-w); min-width: 0;
-  opacity: .35; cursor: pointer;
-  transition: opacity .7s var(--ease);
-  display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: stretch;
+  opacity: .3; cursor: pointer;
+  transform: scale(.74);
+  transition: opacity .7s var(--ease), transform .9s cubic-bezier(.65,0,.25,1);
+  display: flex; align-items: flex-start;
 }
-.slide-obra { grid-column: 1 / 9; min-width: 0; }
+.sem-anim .slide, .sem-anim .slide-pedra { transition: none !important; }
+.slide.antes { transform-origin: right center; }
+.slide.depois { transform-origin: left center; }
+.slide.ativo { transform: none; }
+.slide-obra { flex: 0 0 70%; min-width: 0; }
 .slide-obra img { width: 100%; height: clamp(280px, 60svh, 620px); object-fit: cover; border-radius: var(--r-panel); background: var(--surface); }
 .slide-obra figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 16px; max-width: 60ch; }
 .selo {
   display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px;
   border-radius: var(--r-pill); background: var(--paper); color: var(--muted); font-size: var(--step-small);
 }
+/* o card da pedra encosta na foto da obra, avançando um pouco sobre ela */
 .slide-pedra {
   --pad: 14px;
-  grid-column: 9 / 13; align-self: start;
+  flex: 1; min-width: 0; position: relative; z-index: 1;
+  margin: clamp(32px, 7svh, 80px) 0 0 -56px;
   display: flex; flex-direction: column;
   background: var(--paper); padding: var(--pad);
   border-radius: calc(var(--r-img) + var(--pad)); /* concêntrico com a amostra */
@@ -343,9 +351,13 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 @media (max-width: 860px) {
   .vitrine { --slide-w: calc(100vw - 2 * var(--m) - 28px); }
   .vitrine-trilho { column-gap: 12px; }
-  .slide { display: flex; flex-direction: column; gap: 16px; }
-  .slide-obra img { height: auto; aspect-ratio: 4 / 3; border-radius: calc(var(--r-img) + 8px); }
-  .slide-pedra { flex-direction: row; align-items: center; gap: 14px; opacity: 1; transform: none; }
+  .slide { flex-direction: column; align-items: stretch; transform: scale(.86); }
+  .slide.ativo { transform: none; }
+  /* no celular: foto, card encostado subindo sobre a base da foto, e a legenda embaixo */
+  .slide-obra { display: contents; }
+  .slide-obra img { order: 0; height: auto; aspect-ratio: 4 / 3; border-radius: calc(var(--r-img) + 8px); }
+  .slide-pedra { order: 1; margin: -44px 12px 0; flex-direction: row; align-items: center; gap: 14px; opacity: 1; transform: none; }
+  .slide-obra figcaption { order: 2; margin-top: 14px; }
   .slide-pedra img { width: 34%; flex: none; aspect-ratio: 1; }
   .slide-pedra-texto { padding: 0; }
   .slide-pedra p { font-size: var(--step-small); margin-top: 4px; }
