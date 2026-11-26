@@ -79,7 +79,7 @@ Tudo que precisa ser trocado está marcado no código com um comentário que com
 
 ### A logo
 A logo foi redesenhada em vetor (`img/logo.svg`) com as mesmas fontes da original
-(Raleway em "JAPÃO", com o J redesenhado igual ao da original, e Josefin Slab Bold em "GRANITOS") e as mesmas cores
+(os dois A de "JAPÃO" vêm da Raleway; J, P e O foram redesenhados com medidas da original; "GRANITOS" é Josefin Slab Bold com cada letra ajustada à original) e as mesmas cores
 (amarelo `#F9D004`, vermelho `#DD002B`). Para usar fora do site (Instagram, cartão, fachada),
 use `img/logo-alta-resolucao.png` ou a versão com fundo transparente.
 
