@@ -190,8 +190,9 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .hero {
   position: relative;
   margin: 0;
-  height: 100svh;
-  min-height: 560px;
+  /* um pouco mais alta que a tela: os cantos arredondados só aparecem ao rolar */
+  height: calc(100svh + var(--r-panel) + 16px);
+  min-height: 600px;
   border-radius: 0 0 var(--r-panel) var(--r-panel);  /* só os cantos de baixo arredondados */
   overflow: hidden;
   isolation: isolate;
@@ -206,7 +207,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 }
 .hero-texto {
   position: absolute; z-index: 1; left: 0; right: 0; bottom: 0;
-  padding: clamp(24px, 4vw, 56px) max(var(--m), calc((100vw - var(--max)) / 2)) clamp(32px, 5vw, 72px);
+  padding: clamp(24px, 4vw, 56px) max(var(--m), calc((100vw - var(--max)) / 2)) calc(clamp(32px, 5vw, 72px) + var(--r-panel) + 16px);
   color: var(--paper);
 }
 .hero h1 { font-size: var(--step-hero); max-width: 12ch; line-height: .98; }
@@ -219,9 +220,9 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .estrelas svg { width: 18px; height: 18px; }
 
 @media (max-width: 640px) {
-  .hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; }
+  .hero { height: auto; min-height: calc(100svh + var(--r-panel) + 16px); display: flex; flex-direction: column; justify-content: flex-end; }
   .hero-foto img { object-position: 42% 50%; }
-  .hero-texto { position: relative; padding: 140px var(--m) 28px; }
+  .hero-texto { position: relative; padding: 140px var(--m) calc(28px + var(--r-panel) + 16px); }
   .hero-acoes .botao { width: 100%; padding: 0 18px; white-space: nowrap; }
 }
 
