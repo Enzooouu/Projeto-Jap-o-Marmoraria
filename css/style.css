@@ -381,12 +381,12 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .obra figcaption { padding-top: 14px; max-width: 46ch; }
 .obra h3 { font-size: var(--step-title); }
 .obra figcaption p { margin-top: 6px; color: var(--muted); font-size: 1rem; line-height: 1.5; }
-.m-a { grid-column: 1 / 6; }   .m-a .obra-foto { aspect-ratio: 4 / 5; }
-.m-b { grid-column: 7 / 13; margin-top: clamp(40px, 6vw, 96px); }  .m-b .obra-foto { aspect-ratio: 3 / 2; }
-.m-c { grid-column: 2 / 6; }   .m-c .obra-foto { aspect-ratio: 3 / 4; }
-.m-d { grid-column: 7 / 12; margin-top: clamp(24px, 4vw, 64px); }  .m-d .obra-foto { aspect-ratio: 4 / 3; }
-.m-e { grid-column: 1 / 7; }   .m-e .obra-foto { aspect-ratio: 16 / 10; }
-.m-f { grid-column: 8 / 12; margin-top: clamp(32px, 5vw, 80px); }  .m-f .obra-foto { aspect-ratio: 4 / 5; }
+/* 3 colunas, com a do meio um pouco mais baixa: as fotos continuam desencontradas, mas a seção cabe em 2 telas */
+.mosaico .obra { grid-column: span 4; }
+.mosaico .obra h3 { font-size: clamp(1.25rem, 1.05rem + .6vw, 1.6rem); }
+.m-b, .m-e { margin-top: clamp(32px, 5vw, 72px); }
+.m-a .obra-foto, .m-c .obra-foto, .m-e .obra-foto { aspect-ratio: 4 / 3; }
+.m-b .obra-foto, .m-d .obra-foto, .m-f .obra-foto { aspect-ratio: 5 / 4; }
 .nota-prototipo { margin-top: 40px; font-size: var(--step-small); color: var(--muted); max-width: 60ch; }
 
 @media (max-width: 860px) {
