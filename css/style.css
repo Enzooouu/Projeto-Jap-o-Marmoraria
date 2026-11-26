@@ -368,7 +368,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .obra:hover .obra-foto img { transform: scale(1.04); }
 .obra figcaption { padding-top: 14px; max-width: 46ch; }
 .obra h3 { font-size: var(--step-title); }
-.obra figcaption p { margin-top: 6px; color: var(--muted); font-size: var(--step-small); line-height: 1.5; }
+.obra figcaption p { margin-top: 6px; color: var(--muted); font-size: 1rem; line-height: 1.5; }
 .m-a { grid-column: 1 / 6; }   .m-a .obra-foto { aspect-ratio: 4 / 5; }
 .m-b { grid-column: 7 / 13; margin-top: clamp(40px, 6vw, 96px); }  .m-b .obra-foto { aspect-ratio: 3 / 2; }
 .m-c { grid-column: 2 / 6; }   .m-c .obra-foto { aspect-ratio: 3 / 4; }
