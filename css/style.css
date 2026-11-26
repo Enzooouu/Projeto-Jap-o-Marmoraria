@@ -627,7 +627,8 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
 }
 .zoom.ampliada .zoom-palco { cursor: grab; }
 .zoom.ampliada .zoom-palco:active { cursor: grabbing; }
-#zoom-img { max-width: 100%; max-height: 100%; border-radius: var(--r-img); user-select: none; -webkit-user-drag: none; transform-origin: center; }
+/* a altura máxima é a da tela menos as faixas de cima e de baixo (fotos em pé também cabem inteiras) */
+#zoom-img { width: auto; height: auto; max-width: 100%; max-height: calc(100svh - 152px); object-fit: contain; border-radius: var(--r-img); user-select: none; -webkit-user-drag: none; transform-origin: center; }
 .zoom-botoes { position: absolute; top: 14px; right: 14px; display: flex; gap: 8px; }
 .zoom-botao {
   width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer;
@@ -645,6 +646,7 @@ select:focus, .texto input:focus { border-color: var(--gold-ink); }
 .zoom-legenda { position: absolute; left: 16px; right: 16px; bottom: 24px; text-align: center; color: #E6E6E3; font-size: var(--step-small); }
 @media (max-width: 640px) {
   .zoom-palco { inset: 72px 0 72px; }
+  #zoom-img { max-height: calc(100svh - 144px); }
   .zoom-nav { top: auto; bottom: 14px; margin-top: 0; }
   .zoom-legenda { bottom: 76px; }
 }
