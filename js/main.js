@@ -126,71 +126,89 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
 })();
 
 /* ---------- vitrine de pedras: carrossel infinito, avança sozinho a cada 11 segundos ---------- */
+/* As pedras vizinhas aparecem nas laterais. Com o mouse em cima o tempo corre 2x mais devagar. */
 (() => {
   const vitrine = $('#vitrine');
   const trilhoEl = $('#vitrine-trilho');
   if (!vitrine || !trilhoEl) return;
   const INTERVALO = 11000;
+  const LENTO = 0.5;                 // velocidade do tempo com o mouse em cima
   const originais = $$('.slide', trilhoEl);
   const total = originais.length;
-  // cópias nas pontas para o giro não ter fim: [último] 1 2 3 … 7 [primeiro]
-  const primeiroClone = originais[0].cloneNode(true);
-  const ultimoClone = originais[total - 1].cloneNode(true);
-  [primeiroClone, ultimoClone].forEach((c) => { c.setAttribute('aria-hidden', 'true'); c.inert = true; c.classList.add('clone'); });
-  trilhoEl.appendChild(primeiroClone);
-  trilhoEl.insertBefore(ultimoClone, originais[0]);
+  const N = 2;                       // cópias em cada ponta, para as laterais nunca ficarem vazias
+  const clonar = (el) => { const c = el.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.classList.add('clone'); return c; };
+  for (let k = 0; k < N; k++) {
+    trilhoEl.appendChild(clonar(originais[k % total]));
+    trilhoEl.insertBefore(clonar(originais[(total - 1 - k + total) % total]), trilhoEl.firstElementChild);
+  }
+  const slides = $$('.slide', trilhoEl);
 
   const atualEl = $('#vitrine-atual');
   const tempoEl = $('#vitrine-tempo');
   $('#vitrine-total').textContent = total;
-  let i = 1;            // posição no trilho (1 = primeira pedra real)
+  let i = N;                         // posição no trilho (N = primeira pedra real)
   let ocupado = false;
-  let pausado = false;
-  let inicio = performance.now();
-  let restante = INTERVALO;
+  let progresso = 0;                 // 0 a 1 até a próxima troca
+  let devagar = false, parado = false;
 
+  const deslocamento = () => {
+    const w = slides[0].getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(trilhoEl).columnGap) || 0;
+    return (vitrine.clientWidth - w) / 2 - i * (w + gap);
+  };
   const posicionar = (animar) => {
     trilhoEl.style.transition = animar && !reduzir ? 'transform .9s cubic-bezier(.65,0,.25,1)' : 'none';
-    trilhoEl.style.transform = `translate3d(${-i * 100}%, 0, 0)`;
-    const real = ((i - 1) % total + total) % total;
+    trilhoEl.style.transform = `translate3d(${deslocamento()}px, 0, 0)`;
+    const real = ((i - N) % total + total) % total;
     atualEl.textContent = real + 1;
-    $$('.slide', trilhoEl).forEach((sl, k) => sl.classList.toggle('ativo', k === i));
-    originais.forEach((sl, k) => { sl.inert = k !== real; });
+    slides.forEach((sl, k) => {
+      const ativo = k === i;
+      sl.classList.toggle('ativo', ativo);
+      // só o slide do meio entra na leitura de tela e no Tab; os das laterais servem para clicar e ir até eles
+      if (ativo) sl.removeAttribute('aria-hidden'); else sl.setAttribute('aria-hidden', 'true');
+      $$('a, button, img[tabindex]', sl).forEach((f) => { f.tabIndex = ativo ? 0 : -1; });
+    });
+  };
+  const corrigirPonta = () => {
+    if (i >= total + N) { i -= total; posicionar(false); }
+    if (i < N) { i += total; posicionar(false); }
+    ocupado = false;
   };
   const ir = (passo) => {
     if (ocupado) return;
     i += passo;
     ocupado = !reduzir;
+    progresso = 0;
     posicionar(true);
     if (reduzir) corrigirPonta();
-    reiniciarTempo();
-  };
-  const corrigirPonta = () => {
-    if (i === total + 1) { i = 1; posicionar(false); }
-    if (i === 0) { i = total; posicionar(false); }
-    ocupado = false;
   };
   trilhoEl.addEventListener('transitionend', (e) => { if (e.target === trilhoEl) corrigirPonta(); });
+  window.addEventListener('resize', () => posicionar(false));
 
-  const reiniciarTempo = () => { inicio = performance.now(); restante = INTERVALO; };
+  // clicar numa pedra da lateral leva até ela
+  vitrine.addEventListener('click', (e) => {
+    const sl = e.target.closest('.slide');
+    if (!sl || sl.classList.contains('ativo')) return;
+    e.preventDefault(); e.stopPropagation();
+    ir(slides.indexOf(sl) - i);
+  }, true);
+
+  let antes = performance.now();
   const relogio = (agora) => {
-    if (!pausado) {
-      const feito = Math.min(1, (agora - inicio) / restante);
-      tempoEl.style.transform = `scaleX(${feito})`;
-      if (feito >= 1) ir(1);
+    const dt = agora - antes; antes = agora;
+    if (!parado) {
+      progresso += (dt / INTERVALO) * (devagar ? LENTO : 1);
+      if (progresso >= 1) ir(1);
+      tempoEl.style.transform = `scaleX(${Math.min(progresso, 1)})`;
     }
     requestAnimationFrame(relogio);
   };
 
-  // pausa enquanto o mouse está em cima, o foco está dentro ou a aba está escondida
-  let pausadoEm = 0;
-  const pausar = () => { if (!pausado) { pausado = true; pausadoEm = performance.now(); } };
-  const continuar = () => { if (pausado) { pausado = false; inicio += performance.now() - pausadoEm; } };
-  vitrine.addEventListener('mouseenter', pausar);
-  vitrine.addEventListener('mouseleave', continuar);
-  vitrine.addEventListener('focusin', pausar);
-  vitrine.addEventListener('focusout', continuar);
-  document.addEventListener('visibilitychange', () => (document.hidden ? pausar() : continuar()));
+  vitrine.addEventListener('mouseenter', () => { devagar = true; });
+  vitrine.addEventListener('mouseleave', () => { devagar = false; });
+  vitrine.addEventListener('focusin', () => { devagar = true; });
+  vitrine.addEventListener('focusout', () => { devagar = false; });
+  document.addEventListener('visibilitychange', () => { parado = document.hidden; antes = performance.now(); });
 
   $('#vitrine-proxima').addEventListener('click', () => ir(1));
   $('#vitrine-anterior').addEventListener('click', () => ir(-1));
@@ -209,6 +227,8 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   });
 
   posicionar(false);
+  // fontes e imagens podem mudar a largura depois de carregar
+  window.addEventListener('load', () => posicionar(false));
   requestAnimationFrame(relogio);
 })();
 
@@ -219,7 +239,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   const img = $('#zoom-img');
   const legenda = $('#zoom-legenda');
   if (!caixa) return;
-  const fora = '.marca-img, .rodape-logo, .amostra img, .zoom img, .clone img';
+  const fora = '.marca-img, .rodape-logo, .amostra img, .zoom img, .clone img, .slide:not(.ativo) img';
   const visivel = (el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
   const todas = () => $$('main img, footer img').filter((el) => !el.matches(fora));
   // na navegação entram só as fotos que estão de fato na tela (nada de cópia escondida)

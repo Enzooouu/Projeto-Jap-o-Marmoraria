@@ -286,27 +286,48 @@
     <section class="trabalhos secao" id="trabalhos" aria-labelledby="trabalhos-titulo">
       <div class="trabalhos-cabeca revelar">
         <h2 id="trabalhos-titulo">Trabalhos entregues</h2>
-        <p class="lead">Cozinhas, banheiros e bancadas instalados pela Japão em Piracicaba e região.</p>
+        <div class="trabalhos-intro">
+          <p class="lead">Cozinhas, banheiros e bancadas instalados pela Japão em Piracicaba e região.</p>
+          <a class="botao botao-insta" href="https://www.instagram.com/japaogranitosemarmores/" target="_blank" rel="noopener">
+            <svg class="icone" aria-hidden="true"><use href="#i-insta"/></svg>
+            Mais obras no Instagram
+          </a>
+        </div>
       </div>
 
       <!--
-        TROCAR FOTOS DA GALERIA: substitua os arquivos img/fotos/galeria-1 ... galeria-6
-        por fotos reais das obras (pode tirar do Instagram da Japão). Depois apague o aviso
-        "nota-prototipo" logo abaixo da galeria.
+        TROCAR FOTOS DA GALERIA: substitua os arquivos img/fotos/galeria-1 ... galeria-5 (e servico-cozinhas)
+        por fotos reais das obras (pode tirar do Instagram da Japão), ajuste o título e a frase de cada uma
+        e depois apague o aviso "nota-prototipo" logo abaixo da galeria.
       -->
       <div class="mosaico">
-        <figure class="m-a revelar"><img src="img/fotos/galeria-1-800.webp" srcset="img/fotos/galeria-1-800.webp 800w, img/fotos/galeria-1-1600.webp 1600w" sizes="(min-width: 900px) 34vw, 100vw" width="800" height="1067" alt="Cozinha em L com armários cinza e bancada clara" loading="lazy"></figure>
-        <figure class="m-b revelar"><img src="img/fotos/galeria-2-800.webp" srcset="img/fotos/galeria-2-800.webp 800w, img/fotos/galeria-2-1600.webp 1600w" sizes="(min-width: 900px) 42vw, 100vw" width="800" height="533" alt="Banheiro com bancada longa de pedra clara sobre gabinete azul" loading="lazy"></figure>
-        <figure class="m-c revelar"><img src="img/fotos/galeria-5-800.webp" srcset="img/fotos/galeria-5-800.webp 800w, img/fotos/galeria-5-1600.webp 1600w" sizes="(min-width: 900px) 25vw, 50vw" width="800" height="1200" alt="Cozinha estreita com bancada escura junto à janela" loading="lazy"></figure>
-        <figure class="m-d revelar"><img src="img/fotos/galeria-3-800.webp" srcset="img/fotos/galeria-3-800.webp 800w, img/fotos/galeria-3-1600.webp 1600w" sizes="(min-width: 900px) 34vw, 50vw" width="800" height="534" alt="Banheiro claro com banheira e bancada com cuba de apoio" loading="lazy"></figure>
-        <figure class="m-e revelar"><img src="img/fotos/galeria-4-800.webp" srcset="img/fotos/galeria-4-800.webp 800w, img/fotos/galeria-4-1600.webp 1600w" sizes="(min-width: 900px) 34vw, 100vw" width="800" height="600" alt="Banheiro com bancada suspensa e revestimento cinza" loading="lazy"></figure>
-        <figure class="m-f revelar"><img src="img/fotos/servico-cozinhas-800.webp" srcset="img/fotos/servico-cozinhas-800.webp 800w, img/fotos/servico-cozinhas-1600.webp 1600w" sizes="(min-width: 900px) 34vw, 100vw" width="800" height="533" alt="Ilha de cozinha revestida em pedra branca com veios" loading="lazy"></figure>
+        <figure class="obra m-a revelar">
+          <div class="obra-foto"><img src="img/fotos/galeria-1-800.webp" srcset="img/fotos/galeria-1-800.webp 800w, img/fotos/galeria-1-1600.webp 1600w" sizes="(min-width: 900px) 34vw, 50vw" width="800" height="1067" alt="Cozinha em L com armários cinza e bancada clara" loading="lazy"></div>
+          <figcaption><h3>Cozinha em L</h3><p>Bancada clara contornando a cozinha, com a cuba embaixo da janela.</p></figcaption>
+        </figure>
+        <figure class="obra m-b revelar">
+          <div class="obra-foto"><img src="img/fotos/galeria-2-800.webp" srcset="img/fotos/galeria-2-800.webp 800w, img/fotos/galeria-2-1600.webp 1600w" sizes="(min-width: 900px) 42vw, 50vw" width="800" height="533" alt="Banheiro com bancada longa de pedra clara sobre gabinete azul" loading="lazy"></div>
+          <figcaption><h3>Banheiro com bancada longa</h3><p>Tampo em pedra clara sobre gabinete azul, de ponta a ponta da parede.</p></figcaption>
+        </figure>
+        <figure class="obra m-c revelar">
+          <div class="obra-foto"><img src="img/fotos/galeria-5-800.webp" srcset="img/fotos/galeria-5-800.webp 800w, img/fotos/galeria-5-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 50vw" width="800" height="1200" alt="Cozinha estreita com bancada escura junto à janela" loading="lazy"></div>
+          <figcaption><h3>Cozinha compacta</h3><p>Bancada escura com cooktop e pia na mesma peça.</p></figcaption>
+        </figure>
+        <figure class="obra m-d revelar">
+          <div class="obra-foto"><img src="img/fotos/galeria-3-800.webp" srcset="img/fotos/galeria-3-800.webp 800w, img/fotos/galeria-3-1600.webp 1600w" sizes="(min-width: 900px) 34vw, 50vw" width="800" height="534" alt="Banheiro claro com banheira e bancada com cuba de apoio" loading="lazy"></div>
+          <figcaption><h3>Lavatório com cuba de apoio</h3><p>Bancada branca ao lado da banheira, com a cuba por cima do tampo.</p></figcaption>
+        </figure>
+        <figure class="obra m-e revelar">
+          <div class="obra-foto"><img src="img/fotos/galeria-4-800.webp" srcset="img/fotos/galeria-4-800.webp 800w, img/fotos/galeria-4-1600.webp 1600w" sizes="(min-width: 900px) 42vw, 50vw" width="800" height="600" alt="Banheiro com bancada suspensa e revestimento cinza" loading="lazy"></div>
+          <figcaption><h3>Banheiro com bancada suspensa</h3><p>Tampo com cuba esculpida sobre gabinete branco e madeira.</p></figcaption>
+        </figure>
+        <figure class="obra m-f revelar">
+          <div class="obra-foto"><img src="img/fotos/servico-cozinhas-800.webp" srcset="img/fotos/servico-cozinhas-800.webp 800w, img/fotos/servico-cozinhas-1600.webp 1600w" sizes="(min-width: 900px) 34vw, 50vw" width="800" height="533" alt="Ilha de cozinha revestida em pedra branca com veios" loading="lazy"></div>
+          <figcaption><h3>Ilha revestida em pedra</h3><p>A pedra desce até o chão nas laterais da ilha.</p></figcaption>
+        </figure>
       </div>
 
-      <div class="trabalhos-pe">
-        <p class="nota-prototipo">Imagens ilustrativas neste protótipo. Na versão final entram as fotos das obras da Japão.</p>
-        <a class="link" href="https://www.instagram.com/japaogranitosemarmores/" target="_blank" rel="noopener">Ver mais obras no Instagram @japaogranitosemarmores</a>
-      </div>
+      <p class="nota-prototipo">Imagens ilustrativas neste protótipo. Na versão final entram as fotos das obras da Japão.</p>
     </section>
 
     <!-- ============ 5. SIMULADOR DE ORÇAMENTO ============ -->
@@ -548,6 +569,7 @@
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="i-whats" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 14.98L2 22l5.17-1.5A9.93 9.93 0 1 0 12.04 2Zm0 18.13a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.07.89.9-2.99-.2-.31a8.2 8.2 0 1 1 6.87 3.74Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.16.25-.63.8-.78.96-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.71-1.33.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04 4.77 4.77 0 0 0 1 2.53 10.9 10.9 0 0 0 4.18 3.69c1.55.67 2.16.73 2.94.61.47-.07 1.46-.6 1.66-1.17.2-.58.2-1.07.15-1.17-.06-.1-.22-.16-.46-.28Z"/></symbol>
     <symbol id="i-estrela" viewBox="0 0 24 24"><path fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="m12 3 2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9l-5.4 2.9 1.1-6.1-4.5-4.3 6.1-.8Z"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/></g><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></symbol>
     <symbol id="i-seta" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></symbol>
   </svg>
 
