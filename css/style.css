@@ -254,6 +254,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   transition: opacity .6s var(--ease), transform 1.2s var(--ease);
 }
 .servicos-palco img.ativo { opacity: 1; transform: none; }
+.servicos-palco img:not(.ativo) { pointer-events: none; } /* fotos escondidas não recebem clique */
 .servicos-lista { grid-column: 8 / 13; }
 .servico {
   min-height: 52svh; display: flex; flex-direction: column; justify-content: center;

@@ -220,7 +220,10 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   const legenda = $('#zoom-legenda');
   if (!caixa) return;
   const fora = '.marca-img, .rodape-logo, .amostra img, .zoom img, .clone img';
-  const lista = () => $$('main img, footer img').filter((el) => !el.matches(fora));
+  const visivel = (el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+  const todas = () => $$('main img, footer img').filter((el) => !el.matches(fora));
+  // na navegação entram só as fotos que estão de fato na tela (nada de cópia escondida)
+  const lista = () => todas().filter((el) => visivel(el) && (!el.closest('.servicos-palco') || el.classList.contains('ativo')));
   let atuais = [];
   let pos = 0;
   let escala = 1, tx = 0, ty = 0;
@@ -264,6 +267,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   };
   const abrir = (el) => {
     atuais = lista();
+    if (!atuais.includes(el)) atuais.unshift(el);
     origem = document.activeElement;
     mostrar(atuais.indexOf(el));
     caixa.hidden = false;
@@ -278,7 +282,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   };
 
   // deixa as imagens clicáveis e acessíveis pelo teclado
-  lista().forEach((el) => {
+  todas().forEach((el) => {
     el.classList.add('ampliavel');
     if (el.closest('a, button, label')) return;
     el.tabIndex = 0;
