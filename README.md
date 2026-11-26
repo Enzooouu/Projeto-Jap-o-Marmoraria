@@ -11,7 +11,7 @@ css/style.css   ← cores, fontes, tamanhos e arredondados
 js/main.js      ← simulador de orçamento, menu, animações
 img/fotos/      ← fotos de ambientes (provisórias, do Unsplash)
 img/pedras/     ← fotos das pedras do catálogo
-img/logo.png    ← (ainda não existe) coloque a logo aqui
+img/logo.png    ← a logo (recortada da imagem enviada)
 CREDITOS.md     ← de onde veio cada foto
 ```
 
