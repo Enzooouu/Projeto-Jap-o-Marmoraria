@@ -300,5 +300,46 @@ trilho($('#pedras-trilho'), $('#pedras-progresso'), $$('[data-rolar]'));
   io.observe(hero);
 })();
 
+/* ---------- faixa com o nome: anda sempre e segue a direção da rolagem ---------- */
+(() => {
+  const faixa = $('#faixa');
+  const trilho = faixa && $('.faixa-trilho', faixa);
+  if (!trilho || reduzir) return;
+  const BASE = 60;            // velocidade normal, em pixels por segundo
+  let direcao = -1;           // -1 = anda para a esquerda (rolando para baixo), 1 = para a direita
+  let x = 0;
+  let extra = 0;              // empurrão extra quando a pessoa rola rápido
+  let ultimoY = window.scrollY;
+  let antes = performance.now();
+  let visivel = true;
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const delta = y - ultimoY;
+    if (Math.abs(delta) > 1) direcao = delta > 0 ? -1 : 1;
+    extra = Math.min(extra + Math.abs(delta) * 6, 900);
+    ultimoY = y;
+  }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }).observe(faixa);
+  }
+
+  function passo(agora) {
+    const dt = Math.min((agora - antes) / 1000, 0.05);
+    antes = agora;
+    if (visivel) {
+      const metade = trilho.scrollWidth / 2;  // o texto está duplicado: ao andar meia faixa, volta ao início sem emenda
+      x += direcao * (BASE + extra) * dt;
+      if (x <= -metade) x += metade;
+      if (x > 0) x -= metade;
+      trilho.style.transform = `translate3d(${x}px, 0, 0)`;
+    }
+    extra *= Math.pow(0.04, dt); // o empurrão some aos poucos
+    requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+})();
+
 /* ---------- ano no rodapé ---------- */
 (() => { const ano = $('#ano'); if (ano) ano.textContent = new Date().getFullYear(); })();

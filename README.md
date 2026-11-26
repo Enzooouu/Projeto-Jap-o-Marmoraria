@@ -11,7 +11,8 @@ css/style.css   ← cores, fontes, tamanhos e arredondados
 js/main.js      ← simulador de orçamento, menu, animações
 img/fotos/      ← fotos de ambientes (provisórias, do Unsplash)
 img/pedras/     ← fotos das pedras do catálogo
-img/logo.png    ← a logo (recortada da imagem enviada)
+img/logo.svg    ← a logo redesenhada em vetor (nítida em qualquer tamanho)
+img/logo-alta-resolucao*.png ← a logo em 2048 × 2048 px (fundo branco e transparente)
 CREDITOS.md     ← de onde veio cada foto
 ```
 
@@ -77,8 +78,10 @@ Tudo que precisa ser trocado está marcado no código com um comentário que com
 **`TROCAR`**. No VS Code, aperte `Ctrl + Shift + F` e procure por `TROCAR` para achar todos.
 
 ### A logo
-A logo já está em `img/logo.png` (recortada da imagem que o dono usa). Se conseguir o
-arquivo original em alta qualidade, substitua mantendo o mesmo nome.
+A logo foi redesenhada em vetor (`img/logo.svg`) com as mesmas fontes da original
+(Raleway Medium em "JAPÃO" e Josefin Slab Bold em "GRANITOS") e as mesmas cores
+(amarelo `#F9D004`, vermelho `#DD002B`). Para usar fora do site (Instagram, cartão, fachada),
+use `img/logo-alta-resolucao.png` ou a versão com fundo transparente.
 
 ### As fotos
 Troque os arquivos dentro de `img/fotos/` **mantendo exatamente o mesmo nome**.

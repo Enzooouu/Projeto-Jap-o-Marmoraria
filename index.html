@@ -49,8 +49,8 @@
   <header class="topo" id="inicio">
     <div class="topo-barra">
       <a class="marca" href="#inicio" aria-label="Japão Granitos & Mármores, voltar ao início">
-        <!-- Logo: img/logo.png (se quiser trocar por uma versão melhor, mantenha o mesmo nome) -->
-        <img class="marca-img" src="img/logo.png" alt="Japão Granitos & Mármores" width="482" height="390" onerror="this.remove()">
+        <!-- Logo em vetor (img/logo.svg): fica nítida em qualquer tamanho -->
+        <img class="marca-img" src="img/logo.svg" alt="Japão Granitos & Mármores" width="491" height="405" onerror="this.remove()">
         <span class="marca-texto" aria-hidden="true">Japão Granitos<span class="sol"></span></span>
       </a>
 
@@ -359,12 +359,16 @@
       <div class="cartao-google-area" id="avaliacoes">
         <!-- Prêmio divulgado pela própria Japão no Instagram (post de 20/03/2023) -->
         <div class="premio revelar">
-          <svg class="estatueta" viewBox="0 0 120 220" aria-hidden="true">
-            <path fill="currentColor" d="M60 6l8.6 17.4 19.2 2.8-13.9 13.5 3.3 19.1L60 49.8 42.8 58.8l3.3-19.1-13.9-13.5 19.2-2.8Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-            <rect fill="currentColor" x="52" y="66" width="16" height="10" rx="4"/>
-            <path fill="currentColor" d="M47 82h26c2 0 3.4 1.8 3 3.7L68 160H52L44 85.7c-.4-1.9 1-3.7 3-3.7Z"/>
-            <rect fill="currentColor" x="40" y="166" width="40" height="14" rx="4"/>
-            <rect fill="currentColor" x="28" y="186" width="64" height="26" rx="6"/>
+          <svg class="estatueta" viewBox="0 0 64 200" aria-hidden="true">
+            <g fill="currentColor">
+              <circle cx="32" cy="13" r="9"/>
+              <path fill-rule="evenodd" d="M32 24c9 0 13 4 12.6 10.6L42 66c-.4 9-2.2 19-3.4 30L37.5 137h-11L25.4 96C24.2 85 22.4 75 22 66l-2.6-31.4C19 28 23 24 32 24ZM31.2 100h1.6l-.3 37h-1Z"/>
+              <rect x="17" y="139" width="30" height="8" rx="2.5"/>
+              <rect x="12" y="149" width="40" height="7" rx="2.5"/>
+              <rect x="12" y="158" width="40" height="7" rx="2.5"/>
+              <rect x="12" y="167" width="40" height="7" rx="2.5"/>
+              <rect x="9" y="176" width="46" height="14" rx="3.5"/>
+            </g>
           </svg>
           <div class="premio-texto">
             <h3>Melhores do Ramo em Piracicaba</h3>
@@ -438,7 +442,7 @@
       </div>
     </section>
     <!-- faixa em movimento (fechamento do site) -->
-    <div class="faixa" aria-hidden="true">
+    <div class="faixa" id="faixa" aria-hidden="true">
       <div class="faixa-trilho">
         <span>Japão Granitos &amp; Mármores</span><i class="sol"></i><span>Piracicaba</span><i class="sol"></i><span>Granito e mármore sob medida</span><i class="sol"></i>
         <span>Japão Granitos &amp; Mármores</span><i class="sol"></i><span>Piracicaba</span><i class="sol"></i><span>Granito e mármore sob medida</span><i class="sol"></i>
@@ -453,7 +457,7 @@
       <img src="img/pedras/calacatta-900.webp" width="900" height="900" alt="Detalhe de mármore branco com veios dourados" loading="lazy">
     </figure>
     <div class="rodape-corpo">
-      <p class="rodape-nome"><img class="rodape-logo" src="img/logo.png" width="482" height="390" alt="Japão Granitos & Mármores" loading="lazy"></p>
+      <p class="rodape-nome"><img class="rodape-logo" src="img/logo.svg" width="491" height="405" alt="Japão Granitos & Mármores" loading="lazy"></p>
       <nav class="rodape-menu" aria-label="Rodapé">
         <a href="#servicos">Serviços</a>
         <a href="#pedras">Pedras</a>
