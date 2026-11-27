@@ -491,68 +491,71 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   .opcoes-grade { grid-template-columns: 1fr 1fr; }
 }
 
-/* ---------- 6 e 7. avaliações, prêmio e por que a Japão ---------- */
-.porque { padding-bottom: clamp(80px, 10vw, 160px); overflow: hidden; }
-.porque-cabeca { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
-.porque-cabeca h2 { grid-column: 1 / 7; }
-.porque-cabeca .lead { grid-column: 8 / 13; margin-top: 0; color: var(--paper); }
+/* ---------- 6 e 7. avaliações, prêmio e por que a Japão (seção clara, cabe em ~1,2 tela) ---------- */
+.porque {
+  background: var(--surface); max-width: none;
+  margin-top: var(--gap-secao);
+  padding-top: clamp(56px, 8svh, 96px); padding-bottom: clamp(48px, 7svh, 88px);
+  overflow: hidden;
+}
+.porque-topo {
+  position: relative; max-width: var(--max); margin: 0 auto;
+  display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: center;
+  min-height: clamp(380px, 56svh, 560px);
+}
+.porque-estatueta { grid-column: 1 / 5; position: relative; align-self: stretch; }
+.porque-estatueta .estatueta {
+  position: absolute; left: 4%; top: 50%;
+  height: clamp(380px, 66svh, 640px); width: auto;
+  transform: translateY(-50%) rotate(-11deg); transform-origin: 50% 80%;
+  color: var(--gold);
+}
+.porque-estatueta .estatueta .base { fill: var(--ink); }
 
-/* fileira que gira sem parar (fica 2x mais lenta com o mouse em cima) */
-.avaliacoes { margin: clamp(40px, 5vw, 72px) calc(-1 * var(--m)) 0; overflow: hidden; }
+.porque-info { grid-column: 5 / 13; display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.porque-nota { text-align: left; }
+.porque-nota .nota-grande { font-size: clamp(6rem, 3.5rem + 7vw, 10.5rem); line-height: .85; margin: 0; letter-spacing: -0.02em; }
+.porque-nota .estrelas-grandes { justify-content: flex-start; margin-top: 14px; gap: 6px; }
+.porque-texto h2 { font-size: var(--step-head); }
+.porque-texto .lead { max-width: 38ch; margin-top: 18px; }
+.porque-texto .lead strong { font-weight: 500; }
+.porque-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 24px; }
+.porque-pontos { margin-top: 26px; display: grid; gap: 8px; font-size: var(--step-small); color: var(--muted); }
+.porque-pontos li { position: relative; padding-left: 18px; }
+.porque-pontos li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
+.porque-pontos b { color: var(--ink); font-weight: 500; }
+
+/* fileira de avaliações (estilo cartão do Google) */
+.avaliacoes { margin: clamp(32px, 5svh, 56px) calc(-1 * var(--m)) 0; overflow: hidden; }
 .avaliacoes-trilho { display: flex; gap: 16px; width: max-content; padding: 4px 0; will-change: transform; }
 .aval {
-  --pad: 22px;
-  flex: none; width: clamp(260px, 26vw, 340px);
-  display: flex; flex-direction: column; gap: 10px;
-  background: var(--dark-2); color: var(--paper);
-  padding: var(--pad); border-radius: calc(var(--r-img) + 6px);
-}
-.aval-estrelas { display: flex; gap: 3px; color: var(--gold); }
-.aval-estrelas svg { width: 16px; height: 16px; }
-.aval-titulo { font-family: var(--font-display); font-weight: 400; font-size: 1.35rem; line-height: 1.2; }
-.aval-texto { color: #E6E6E3; font-size: 1rem; line-height: 1.5; }
-.aval-fonte { margin-top: auto; padding-top: 6px; font-size: var(--step-small); color: #B9B7B1; }
-
-/* cartão único: prêmio + nota do Google */
-.selos { max-width: var(--max); margin: clamp(48px, 6vw, 88px) auto 0; }
-.selo-cartao {
-  --pad: clamp(24px, 3.5vw, 48px);
-  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); align-items: center;
+  --pad: 24px;
+  flex: none; width: clamp(300px, 27vw, 400px); min-height: 250px;
+  display: flex; flex-direction: column;
   background: var(--paper); color: var(--ink);
-  padding: var(--pad); border-radius: calc(var(--r-img) + 24px);
+  padding: var(--pad); border-radius: calc(var(--r-img) + 8px);
 }
-.selo-premio { display: flex; align-items: center; gap: clamp(18px, 2.5vw, 32px); }
-.selo-premio .estatueta { flex: none; width: clamp(64px, 6vw, 96px); height: auto; color: var(--gold); }
-.selo-premio .estatueta .base { fill: var(--ink); }    /* base escura sobre o cartão claro */
-.selo-premio h3 { font-size: var(--step-title); }
-.selo-premio p { margin-top: 8px; color: var(--muted); }
-.selo-premio .link { margin-top: 4px; }
-.selo-google {
-  --pad2: clamp(18px, 2.5vw, 28px);
-  display: flex; align-items: center; gap: clamp(18px, 2.5vw, 32px);
-  background: var(--surface); padding: var(--pad2); border-radius: 24px;   /* raio interno: o cartão de fora tem 36px */
+.aval-topo { display: flex; align-items: center; gap: 12px; }
+.aval-avatar {
+  width: 44px; height: 44px; flex: none; border-radius: 50%;
+  display: grid; place-items: center; background: var(--surface); color: var(--gold-ink);
 }
-.selo-google .nota-grande { font-size: clamp(4.5rem, 3rem + 4vw, 7.5rem); line-height: .9; margin: 0; }
-.selo-google .estrelas-grandes { justify-content: flex-start; margin: 0; }
-.selo-google .nota-total { margin-top: 8px; font-size: var(--step-body); }
-.selo-google .botao { margin-top: 16px; }
-
-/* por que a Japão: faixa curta embaixo */
-.porque-japao { max-width: var(--max); margin: clamp(56px, 7vw, 104px) auto 0; }
-.porque-japao h3 { font-size: var(--step-title); color: var(--gold-soft); }
-.porque-japao .razoes { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 48px); }
-.porque-japao h4 { margin: 0; font-family: var(--font-text); font-weight: 500; font-size: var(--step-body); }
-.porque-japao .razoes p { margin-top: 6px; color: #E6E6E3; max-width: 36ch; }
+.aval-avatar svg { width: 20px; height: 20px; }
+.aval-nome { font-weight: 500; font-size: 1.05rem; line-height: 1.25; }
+.aval-meta { font-size: var(--step-small); color: var(--muted); }
+.aval-texto { margin-top: 16px; font-size: 1rem; line-height: 1.55; }
+.aval-rodape { margin-top: auto; padding-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.aval-estrelas { display: flex; gap: 3px; color: #E0B800; }
+.aval-estrelas svg { width: 16px; height: 16px; }
+.aval-data { font-size: var(--step-small); color: var(--muted); }
 
 @media (max-width: 860px) {
-  .porque-cabeca { display: block; }
-  .porque-cabeca .lead { margin-top: 16px; }
-  .selo-cartao { grid-template-columns: 1fr; }
-  .porque-japao .razoes { grid-template-columns: 1fr; }
-}
-@media (max-width: 480px) {
-  .selo-premio { align-items: flex-start; }
-  .selo-google { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .porque-topo { display: block; min-height: 0; }
+  .porque-estatueta { position: absolute; right: 4px; top: 0; width: 90px; height: 150px; pointer-events: none; }
+  .porque-estatueta .estatueta { position: static; height: 150px; transform: rotate(10deg); }
+  .porque-info { display: block; }
+  .porque-nota { padding-right: 120px; }
+  .porque-texto { margin-top: 32px; }
 }
 
 /* ---------- 8. como funciona ---------- */
