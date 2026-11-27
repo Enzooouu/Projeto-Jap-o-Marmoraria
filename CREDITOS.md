@@ -48,3 +48,9 @@ Nenhuma é obra da Japão. Troque cada uma por uma foto real de obra feita naque
 | `carrara-*.webp` | "Tomtom Suites" — https://www.flickr.com/photos/44896043@N07/ | Tomtom Suites | CC BY 2.0 |
 | `calacatta-*.webp` | https://images.unsplash.com/photo-1556912173-3bb406ef7e77 | Unsplash | Licença Unsplash |
 | `nero-marquina-*.webp` | "Client Work - Bathroom" — https://www.flickr.com/photos/91473712@N08/ | Rooky Yootz | CC BY 2.0 |
+
+## Fotos reais da Japão (Instagram @japaogranitosemarmores)
+
+| Arquivo | Onde está | O que mostra |
+| --- | --- | --- |
+| `img/fotos/rodape-detalhes.webp` | Rodapé | Porta-copos e tábuas em granito preto |
