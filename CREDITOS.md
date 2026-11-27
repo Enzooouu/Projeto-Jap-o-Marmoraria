@@ -59,3 +59,8 @@ Nenhuma é obra da Japão. Troque cada uma por uma foto real de obra feita naque
 | `img/fotos/obra-lavatorio-pitaya.webp` | Serviços › Banheiros | Lavatório em Granito Pitaya com cuba esculpida |
 | `img/fotos/obra-quartzo-renault.webp` | Serviços › Balcões | Bancada em Quartzo Branco, loja Renault Piracicaba |
 | `img/fotos/obra-sao-gabriel-slim.webp` | Como funciona › Instalação | Preto São Gabriel escovado, acabamento slim |
+| `img/fotos/obra-via-lactea.webp` | Topo | Cozinha em Preto Via Láctea |
+| `img/fotos/obra-ilha-clara.webp` | Serviços › Cozinhas | Ilha em granito claro |
+| `img/fotos/obra-cozinha-pitaya.webp` | Galeria | Bancada em Granito Pitaya |
+| `img/fotos/obra-lavatorio-claro.webp` | Galeria | Lavatório em pedra clara |
+| `img/fotos/obra-verde-ubatuba.webp` | Vitrine › Verde Ubatuba | Balcão em Verde Ubatuba, saia 6 cm |
