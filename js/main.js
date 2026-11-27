@@ -23,6 +23,15 @@ const PECAS = {
   cozinha: 'Cozinha completa',
   banheiro: 'Bancada de banheiro',
   balcao: 'Balcão',
+  naosei: 'Ainda não sei (quero uma sugestão)',
+};
+
+/* tamanho de referência de cada opção, usado no desenho quando a pessoa não digita a medida */
+const TAMANHOS = {
+  pequena: { m: 0.9, texto: 'pequena, até 1,2 m' },
+  media: { m: 1.8, texto: 'média, de 1,2 a 2,5 m' },
+  grande: { m: 3.2, texto: 'grande, mais de 2,5 m' },
+  naosei: { m: 1.8, texto: 'não sei ainda' },
 };
 
 document.documentElement.classList.add('js');
@@ -244,7 +253,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   const img = $('#zoom-img');
   const legenda = $('#zoom-legenda');
   if (!caixa) return;
-  const fora = '.hero-foto img, .marca-img, .rodape-logo, .amostra img, .zoom img, .clone img, .slide:not(.ativo) img';
+  const fora = '.hero-foto img, .marca-img, .rodape-logo, .amostra img, .opcao img, .zoom img, .clone img, .slide:not(.ativo) img';
   const visivel = (el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
   const todas = () => $$('main img, footer img').filter((el) => !el.matches(fora));
   // na navegação entram só as fotos que estão de fato na tela (nada de cópia escondida)
@@ -401,23 +410,20 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   // monta as amostras de pedra
   const caixa = $('#amostras');
   caixa.innerHTML = PEDRAS.map((p, i) => `
-    <label class="amostra">
+    <label class="opcao opcao-pedra">
       <input type="radio" name="pedra" value="${p.id}" ${i === 0 ? 'checked' : ''}>
-      <span class="amostra-cartao">
-        <img src="img/pedras/${p.id}-480.webp" width="480" height="480" alt="" loading="lazy">
-        <span>${p.nome}</span>
-      </span>
+      <span><img src="img/pedras/${p.id}-480.webp" width="36" height="36" alt="" loading="lazy"><b>${p.nome}</b></span>
     </label>`).join('') + `
-    <label class="amostra">
+    <label class="opcao opcao-pedra">
       <input type="radio" name="pedra" value="indefinida">
-      <span class="amostra-cartao"><span class="amostra-vazia" aria-hidden="true"></span><span>Ainda não sei</span></span>
+      <span><i class="pedra-vazia" aria-hidden="true"></i><b>Ainda não sei</b></span>
     </label>`;
 
   const forma = $('#sim-forma');
   const textura = $('#textura-img');
   const comp = $('#comp');
-  const compSaida = $('#comp-saida');
   const prof = $('#prof');
+  const numero = (el) => { const n = parseFloat(String(el.value).replace(',', '.')); return Number.isFinite(n) && n > 0 ? n : 0; };
   const resumo = $('#sim-resumo');
   const textoPre = $('#sim-texto');
   const campoTexto = $('#sim-campo-texto');
@@ -442,7 +448,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
     if (peca === 'cozinha') {
       // bancada em L (profundidade desenhada um pouco menor para caber pia e cooktop)
       const f = Math.round(fundo * 0.75);
-      const perna = Math.max(120, Math.min(170, Math.round(largura * 0.6)));
+      const perna = Math.min(Math.max(120, Math.min(170, Math.round(largura * 0.6))), 300 - 40 - f - 40); // não passa da borda do desenho
       const y0 = 40;
       const pw = Math.min(80, Math.round(largura * 0.2));
       const px = x + largura - pw - 22;
@@ -490,6 +496,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
     ];
     if (dados.nome) linhas.push(`• Nome: ${dados.nome}`);
     if (dados.bairro) linhas.push(`• Bairro/cidade: ${dados.bairro}`);
+    if (dados.obs) linhas.push('', dados.obs);
     linhas.push('', 'Pode me passar um orçamento?');
     return linhas.join('\n');
   }
@@ -497,20 +504,28 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   function atualizar() {
     const peca = valor('peca') || 'bancada';
     const pedraId = valor('pedra') || PEDRAS[0].id;
-    const comprimento = Number(comp.value);
-    const profundidade = Number(prof.value);
+    const faixa = TAMANHOS[valor('tamanho') || 'media'];
+    const compDigitado = Math.min(numero(comp), 12);
+    const profDigitada = Math.min(numero(prof), 150);
+    const comprimento = Math.max(0.5, Math.min(compDigitado || faixa.m, 6)); // só para o desenho
     const pedra = PEDRAS.find((p) => p.id === pedraId);
 
-    compSaida.textContent = fmtM(comprimento);
     if (pedra) textura.setAttribute('href', `img/pedras/${pedra.id}-480.webp`);
     else textura.setAttribute('href', '');
-    desenhar(peca, comprimento, profundidade);
+    desenhar(peca === 'naosei' ? 'bancada' : peca, comprimento, profDigitada || 60);
     // sem pedra definida, mostra um cinza neutro
     if (!pedra) $$('.peca', forma).forEach((el) => { el.setAttribute('fill', '#D9D5CD'); el.setAttribute('stroke', '#D9D5CD'); });
 
-    const tamanho = profundidade ? `${fmtM(comprimento)} × ${profundidade} cm` : `${fmtM(comprimento)} de comprimento (profundidade a medir)`;
+    let tamanho = faixa.texto;
+    if (compDigitado || profDigitada) {
+      const partes = [];
+      if (compDigitado) partes.push(fmtM(compDigitado));
+      if (profDigitada) partes.push(`${profDigitada} cm de profundidade`);
+      tamanho = partes.join(' × ');
+    }
     const nomePedra = pedra ? `${pedra.nome} (${pedra.tipo})` : 'ainda não escolhi, quero sugestões';
-    resumo.textContent = `${PECAS[peca]} em ${pedra ? pedra.nome : 'pedra a escolher'}, cerca de ${tamanho}`;
+    const nomePeca = peca === 'naosei' ? 'Peça a definir' : PECAS[peca];
+    resumo.textContent = `${nomePeca} em ${pedra ? pedra.nome : 'pedra a escolher'}, ${compDigitado ? `cerca de ${fmtM(compDigitado)}` : `tamanho ${{ pequena: 'pequeno', media: 'médio', grande: 'grande', naosei: 'a definir' }[valor('tamanho') || 'media']}`}`;
 
     const texto = mensagem({
       peca: PECAS[peca],
@@ -518,6 +533,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
       tamanho,
       nome: $('#nome').value.trim(),
       bairro: $('#bairro').value.trim(),
+      obs: $('#obs').value.trim(),
     });
     textoPre.textContent = texto;
     campoTexto.value = texto;

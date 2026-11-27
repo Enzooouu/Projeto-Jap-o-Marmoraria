@@ -339,84 +339,89 @@
 
     <!-- ============ 5. SIMULADOR DE ORÇAMENTO ============ -->
     <section class="orcamento secao" id="orcamento" aria-labelledby="orcamento-titulo">
-      <div class="orcamento-cabeca revelar">
-        <h2 id="orcamento-titulo">Monte seu orçamento</h2>
-        <p class="lead">Escolha a peça, a pedra e o tamanho. A mensagem sai pronta para o WhatsApp, e o valor a Japão passa por lá.</p>
-      </div>
-
       <form class="sim" id="simulador" action="https://wa.me/5519987415983" method="get" target="_blank">
-        <div class="sim-previa" aria-live="polite">
-          <svg class="sim-desenho" id="sim-desenho" viewBox="0 0 420 300" role="img" aria-labelledby="sim-desenho-titulo">
-            <title id="sim-desenho-titulo">Desenho da peça escolhida na pedra escolhida</title>
-            <defs>
-              <pattern id="textura-pedra" patternUnits="userSpaceOnUse" width="420" height="420">
-                <image id="textura-img" href="img/pedras/preto-absoluto-480.webp" width="420" height="420" preserveAspectRatio="xMidYMid slice"/>
-              </pattern>
-            </defs>
-            <g id="sim-forma"></g>
-          </svg>
-          <p class="sim-resumo" id="sim-resumo">Bancada em Preto Absoluto, cerca de 1,80 m × 60 cm</p>
+
+        <!-- lado esquerdo: título, prévia da peça, mensagem e botão (fica parado enquanto o cartão rola) -->
+        <div class="sim-lado">
+          <div class="sim-cabeca revelar">
+            <h2 id="orcamento-titulo">Monte seu orçamento</h2>
+            <p class="lead">Marque as opções e a mensagem chega pronta no WhatsApp. O valor a Japão passa por lá.</p>
+          </div>
+
+          <div class="sim-previa" aria-live="polite">
+            <svg class="sim-desenho" id="sim-desenho" viewBox="0 0 420 300" role="img" aria-labelledby="sim-desenho-titulo">
+              <title id="sim-desenho-titulo">Desenho da peça escolhida na pedra escolhida</title>
+              <defs>
+                <pattern id="textura-pedra" patternUnits="userSpaceOnUse" width="420" height="420">
+                  <image id="textura-img" href="img/pedras/preto-absoluto-480.webp" width="420" height="420" preserveAspectRatio="xMidYMid slice"/>
+                </pattern>
+              </defs>
+              <g id="sim-forma"></g>
+            </svg>
+            <p class="sim-resumo" id="sim-resumo">Bancada em Preto Absoluto, cerca de 1,80 m</p>
+          </div>
+
+          <div class="sim-envio">
+            <p class="sim-rotulo">Sua mensagem</p>
+            <pre class="sim-texto" id="sim-texto"></pre>
+            <input type="hidden" name="text" id="sim-campo-texto" value="Olá, Japão Granitos! Vim pelo site e gostaria de um orçamento.">
+            <button class="botao botao-largo" type="submit" id="sim-enviar">
+              <svg class="icone" aria-hidden="true"><use href="#i-whats"/></svg>
+              Enviar pelo WhatsApp
+            </button>
+            <p class="sim-nota">Abre o WhatsApp com a mensagem pronta para o número (19) 98741-5983. Você revisa antes de mandar.</p>
+          </div>
         </div>
 
-        <div class="sim-campos">
+        <!-- lado direito: as perguntas -->
+        <div class="sim-cartao">
           <fieldset class="campo">
-            <legend>Tipo de peça</legend>
-            <div class="opcoes">
-              <label class="chip-radio"><input type="radio" name="peca" value="pia"><span>Pia</span></label>
-              <label class="chip-radio"><input type="radio" name="peca" value="bancada" checked><span>Bancada</span></label>
-              <label class="chip-radio"><input type="radio" name="peca" value="cozinha"><span>Cozinha completa</span></label>
-              <label class="chip-radio"><input type="radio" name="peca" value="banheiro"><span>Banheiro</span></label>
-              <label class="chip-radio"><input type="radio" name="peca" value="balcao"><span>Balcão</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="campo">
-            <legend>Pedra</legend>
-            <div class="amostras" id="amostras">
-              <!-- preenchido pelo js/main.js a partir da lista PEDRAS -->
+            <legend>Qual peça?</legend>
+            <div class="opcoes opcoes-grade">
+              <label class="opcao"><input type="radio" name="peca" value="pia"><span><b>Pia</b><small>cozinha ou lavanderia</small></span></label>
+              <label class="opcao"><input type="radio" name="peca" value="bancada" checked><span><b>Bancada</b><small>reta ou em L</small></span></label>
+              <label class="opcao"><input type="radio" name="peca" value="cozinha"><span><b>Cozinha completa</b><small>bancada, pia e ilha</small></span></label>
+              <label class="opcao"><input type="radio" name="peca" value="banheiro"><span><b>Banheiro</b><small>bancada de lavatório</small></span></label>
+              <label class="opcao"><input type="radio" name="peca" value="balcao"><span><b>Balcão</b><small>americano ou comercial</small></span></label>
+              <label class="opcao"><input type="radio" name="peca" value="naosei"><span><b>Ainda não sei</b></span></label>
             </div>
           </fieldset>
 
           <fieldset class="campo">
             <legend>Tamanho aproximado</legend>
+            <div class="opcoes">
+              <label class="opcao"><input type="radio" name="tamanho" value="pequena"><span><b>Pequena</b><small>até 1,2 m</small></span></label>
+              <label class="opcao"><input type="radio" name="tamanho" value="media" checked><span><b>Média</b><small>1,2 a 2,5 m</small></span></label>
+              <label class="opcao"><input type="radio" name="tamanho" value="grande"><span><b>Grande</b><small>mais de 2,5 m</small></span></label>
+              <label class="opcao"><input type="radio" name="tamanho" value="naosei"><span><b>Não sei</b></span></label>
+            </div>
+            <p class="campo-dica">Medidas, se souber</p>
             <div class="medidas">
-              <label class="medida">
-                <span class="medida-rotulo">Comprimento <output id="comp-saida" for="comp">1,80 m</output></span>
-                <input type="range" id="comp" name="comp" min="0.5" max="6" step="0.1" value="1.8">
-              </label>
-              <label class="medida">
-                <span class="medida-rotulo">Profundidade</span>
-                <select id="prof" name="prof">
-                  <option value="40">40 cm</option>
-                  <option value="50">50 cm</option>
-                  <option value="60" selected>60 cm</option>
-                  <option value="0">Não sei ainda</option>
-                </select>
-              </label>
+              <label class="texto"><span>Comprimento (m)</span><input type="text" inputmode="decimal" id="comp" name="comp" placeholder="1,80"></label>
+              <span class="medidas-x" aria-hidden="true">×</span>
+              <label class="texto"><span>Profundidade (cm)</span><input type="text" inputmode="numeric" id="prof" name="prof" placeholder="60"></label>
             </div>
           </fieldset>
 
-          <div class="campo campo-duplo">
-            <label class="texto">
-              <span>Seu nome <small>(opcional)</small></span>
-              <input type="text" id="nome" name="nome" autocomplete="given-name">
-            </label>
-            <label class="texto">
-              <span>Bairro ou cidade <small>(opcional)</small></span>
-              <input type="text" id="bairro" name="bairro" autocomplete="address-level2">
-            </label>
-          </div>
+          <fieldset class="campo">
+            <legend>Pedra</legend>
+            <div class="opcoes" id="amostras">
+              <!-- preenchido pelo js/main.js a partir da lista PEDRAS -->
+            </div>
+          </fieldset>
 
-          <details class="sim-mensagem">
-            <summary>Ver a mensagem que vai ser enviada</summary>
-            <pre id="sim-texto"></pre>
-          </details>
+          <fieldset class="campo">
+            <legend>Seus dados <small>(opcional)</small></legend>
+            <div class="campo-duplo">
+              <label class="texto"><span>Nome</span><input type="text" id="nome" name="nome" autocomplete="given-name" placeholder="Seu nome"></label>
+              <label class="texto"><span>Bairro e cidade</span><input type="text" id="bairro" name="bairro" autocomplete="address-level2" placeholder="ex.: Paulicéia, Piracicaba"></label>
+            </div>
+          </fieldset>
 
-          <input type="hidden" name="text" id="sim-campo-texto" value="Olá, Japão Granitos! Vim pelo site e gostaria de um orçamento.">
-          <button class="botao botao-largo" type="submit" id="sim-enviar">
-            <svg class="icone" aria-hidden="true"><use href="#i-whats"/></svg>
-            Enviar pedido pelo WhatsApp
-          </button>
+          <label class="campo texto">
+            <span class="campo-titulo">Quer contar mais alguma coisa? <small>(opcional)</small></span>
+            <textarea id="obs" name="obs" rows="3" placeholder="ex.: quero com frontão, a cuba já está comprada, prefiro medição no sábado…"></textarea>
+          </label>
         </div>
       </form>
     </section>
