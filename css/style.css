@@ -499,28 +499,31 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   overflow: hidden;
 }
 .porque-topo {
-  position: relative; max-width: var(--max); margin: 0 auto;
+  position: relative; width: min(100%, 1760px); margin: 0 auto;
   display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: center;
-  min-height: clamp(380px, 56svh, 560px);
+  min-height: clamp(420px, 62svh, 640px);
 }
-.porque-estatueta { grid-column: 1 / 5; position: relative; align-self: stretch; }
+.porque-estatueta { grid-column: 1 / 4; position: relative; align-self: stretch; }
 .porque-estatueta .estatueta {
-  position: absolute; left: 4%; top: 50%;
-  height: clamp(380px, 66svh, 640px); width: auto;
+  position: absolute; left: 0; top: 50%;
+  height: clamp(420px, 72svh, 720px); width: auto;
   transform: translateY(-50%) rotate(-11deg); transform-origin: 50% 80%;
   color: var(--gold);
 }
 .porque-estatueta .estatueta .base { fill: var(--ink); }
 
-.porque-info { grid-column: 5 / 13; display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.porque-info { grid-column: 4 / 13; display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
 .porque-nota { text-align: left; }
-.porque-nota .nota-grande { font-size: clamp(6rem, 3.5rem + 7vw, 10.5rem); line-height: .85; margin: 0; letter-spacing: -0.02em; }
-.porque-nota .estrelas-grandes { justify-content: flex-start; margin-top: 14px; gap: 6px; }
-.porque-texto h2 { font-size: var(--step-head); }
-.porque-texto .lead { max-width: 38ch; margin-top: 18px; }
+.porque-nota .nota-grande { font-size: clamp(6.5rem, 3.5rem + 8.5vw, 13rem); line-height: .85; margin: 0; letter-spacing: -0.02em; }
+.porque-nota .estrelas-grandes { justify-content: space-between; margin-top: 18px; gap: 6px; }
+.porque-nota .estrelas-grandes svg { width: clamp(30px, 2.8vw, 50px); height: clamp(30px, 2.8vw, 50px); }
+.porque-texto h2 { font-size: clamp(2.4rem, 1.2rem + 3.8vw, 5.4rem); }
+.porque-texto .lead { max-width: 44ch; margin-top: 20px; font-size: clamp(1.2rem, 1rem + .7vw, 1.75rem); }
 .porque-texto .lead strong { font-weight: 500; }
-.porque-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 24px; }
-.porque-pontos { margin-top: 26px; display: grid; gap: 8px; font-size: var(--step-small); color: var(--muted); }
+.porque-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 28px; }
+.porque-acoes .botao { min-height: 60px; padding: 0 34px; font-size: var(--step-lead); }
+.porque-acoes .link { font-size: var(--step-lead); }
+.porque-pontos { margin-top: 32px; display: grid; gap: 14px; font-size: clamp(1.05rem, .95rem + .4vw, 1.35rem); color: var(--muted); }
 .porque-pontos li { position: relative; padding-left: 18px; }
 .porque-pontos li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
 .porque-pontos b { color: var(--ink); font-weight: 500; }
@@ -555,7 +558,12 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   .porque-estatueta .estatueta { position: static; height: 150px; transform: rotate(10deg); }
   .porque-info { display: block; }
   .porque-nota { padding-right: 120px; }
-  .porque-texto { margin-top: 32px; }
+  .porque-texto { margin-top: 28px; }
+  .porque-acoes .botao, .porque-acoes .link { font-size: var(--step-body); }
+  .porque-acoes .botao { min-height: 52px; padding: 0 24px; }
+  .porque-pontos { font-size: 1rem; gap: 10px; margin-top: 24px; }
+  .porque-nota .estrelas-grandes { justify-content: flex-start; }
+  .porque-nota .estrelas-grandes svg { width: 26px; height: 26px; }
 }
 
 /* ---------- 8. como funciona ---------- */
