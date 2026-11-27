@@ -371,35 +371,39 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .botao-insta { background: var(--ink); color: var(--paper); }
 .botao-insta:hover { background: var(--dark-2); }
 .mosaico {
-  display: grid; grid-template-columns: repeat(12, 1fr);
-  column-gap: clamp(24px, 4.5vw, 72px); row-gap: clamp(48px, 12svh, 130px); /* respiro proporcional à altura da tela */
-  align-items: start; margin-top: clamp(40px, 5vw, 72px);
+  display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(24px, 4vw, 64px);
+  align-items: stretch;
+  height: clamp(980px, 150svh, 1500px);   /* a galeria inteira cabe em cerca de 2 telas */
+  margin-top: clamp(40px, 5vw, 72px);
 }
+.coluna { display: flex; flex-direction: column; gap: clamp(28px, 5svh, 56px); min-height: 0; }
+.coluna:nth-child(3) { padding-top: clamp(48px, 13svh, 140px); }  /* a coluna da direita começa mais baixo */
+.obra { margin: 0; }
 .obra-foto { border-radius: var(--r-img); overflow: hidden; background: var(--surface); }
-.obra-foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.obra-foto img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
 .obra:hover .obra-foto img { transform: scale(1.04); }
 .obra figcaption { padding-top: 14px; max-width: 46ch; }
-.obra h3 { font-size: var(--step-title); }
+.obra h3 { font-size: clamp(1.25rem, 1.05rem + .6vw, 1.6rem); }
 .obra figcaption p { margin-top: 6px; color: var(--muted); font-size: 1rem; line-height: 1.5; }
-/* 3 colunas, com a do meio um pouco mais baixa: as fotos continuam desencontradas, mas a seção cabe em 2 telas */
-.mosaico .obra { grid-column: span 4; }
-.mosaico .obra h3 { font-size: clamp(1.25rem, 1.05rem + .6vw, 1.6rem); }
-/* cada coluna começa numa altura: fotos espalhadas pelas 2 telas */
-.m-b, .m-e { margin-top: clamp(40px, 13svh, 140px); }
-.m-c, .m-f { margin-top: clamp(16px, 5svh, 56px); }
-.m-a .obra-foto, .m-c .obra-foto, .m-e .obra-foto { aspect-ratio: 1 / 1; }
-.m-b .obra-foto, .m-d .obra-foto, .m-f .obra-foto { aspect-ratio: 4 / 3; }
+/* a primeira foto de cada coluna tem um tamanho; a de baixo cresce até o fim da coluna */
+.coluna > .obra:first-child { flex: none; }
+.m-a .obra-foto { aspect-ratio: 4 / 3; }
+.m-b .obra-foto { aspect-ratio: 4 / 5; }
+.m-c .obra-foto { aspect-ratio: 5 / 4; }
+.coluna > .obra:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.coluna > .obra:last-child .obra-foto { flex: 1; min-height: 160px; }
 .nota-prototipo { margin-top: 40px; font-size: var(--step-small); color: var(--muted); max-width: 60ch; }
 
 @media (max-width: 860px) {
   .trabalhos-cabeca { display: block; }
   .trabalhos-intro { margin-top: 20px; }
-  .mosaico { grid-template-columns: 1fr 1fr; column-gap: 14px; row-gap: 28px; }
-  .mosaico .obra { grid-column: auto; margin-top: 0; }
+  .mosaico { height: auto; grid-template-columns: 1fr 1fr; column-gap: 14px; row-gap: 28px; align-items: start; }
+  .coluna { display: contents; }
+  .mosaico .obra { display: block; }
   .mosaico .obra-foto { aspect-ratio: 3 / 4; }
-  .mosaico .m-b, .mosaico .m-d, .mosaico .m-f { margin-top: 48px; }
-  .mosaico .m-c, .mosaico .m-e { margin-top: 0; }
+  .mosaico .m-d, .mosaico .m-e, .mosaico .m-f { margin-top: 48px; }  /* coluna da direita desencontrada */
   .obra h3 { font-size: 1.15rem; }
+}
 }
 
 /* ---------- 5. simulador ---------- */

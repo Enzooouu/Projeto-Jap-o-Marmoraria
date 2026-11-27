@@ -602,5 +602,22 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   requestAnimationFrame(passo);
 })();
 
+/* ---------- galeria: as legendas de baixo ficam com a mesma altura,
+   para as fotos de baixo das 3 colunas terminarem exatamente na mesma linha ---------- */
+(() => {
+  const legendas = $$('.coluna > .obra:last-child figcaption');
+  if (!legendas.length) return;
+  const igualar = () => {
+    legendas.forEach((l) => { l.style.minHeight = ''; });
+    if (getComputedStyle(legendas[0].closest('.coluna')).display === 'contents') return; // celular: sem colunas
+    const maior = Math.max(...legendas.map((l) => l.offsetHeight));
+    legendas.forEach((l) => { l.style.minHeight = `${maior}px`; });
+  };
+  window.addEventListener('resize', igualar);
+  window.addEventListener('load', igualar);
+  if (document.fonts) document.fonts.ready.then(igualar);
+  igualar();
+})();
+
 /* ---------- ano no rodapé ---------- */
 (() => { const ano = $('#ano'); if (ano) ano.textContent = new Date().getFullYear(); })();
