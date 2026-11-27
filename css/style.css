@@ -6,7 +6,7 @@
 
 :root {
   /* Cores */
-  --bg: #FAFAF8;          /* branco suave de fundo (quase branco, sem puxar para o creme) */
+  --bg: #FAFAFA;          /* branco suave de fundo: neutro, sem puxar para o amarelo */
   --surface: #F3F2EF;     /* um tom de pedra clara para separar áreas */
   --ink: #1A1A18;         /* grafite: texto principal */
   --muted: #5C5A55;       /* texto secundário (contraste acima de 4.5:1) */
