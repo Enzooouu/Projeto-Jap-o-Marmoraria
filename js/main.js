@@ -635,5 +635,28 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   igualar();
 })();
 
+/* ---------- fileira de avaliações: gira sem parar, 2x mais lenta com o mouse em cima ---------- */
+(() => {
+  const faixa = $('#avaliacoes-faixa');
+  const trilhoEl = faixa && $('.avaliacoes-trilho', faixa);
+  if (!trilhoEl || reduzir) return;
+  const VELOCIDADE = 45;   // pixels por segundo
+  let x = 0, lento = false, visivel = true, antes = performance.now();
+  faixa.addEventListener('mouseenter', () => { lento = true; });
+  faixa.addEventListener('mouseleave', () => { lento = false; });
+  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }).observe(faixa);
+  const passo = (agora) => {
+    const dt = Math.min((agora - antes) / 1000, 0.05); antes = agora;
+    if (visivel) {
+      const metade = trilhoEl.scrollWidth / 2;
+      x -= VELOCIDADE * (lento ? 0.5 : 1) * dt;
+      if (x <= -metade) x += metade;
+      trilhoEl.style.transform = `translate3d(${x}px, 0, 0)`;
+    }
+    requestAnimationFrame(passo);
+  };
+  requestAnimationFrame(passo);
+})();
+
 /* ---------- ano no rodapé ---------- */
 (() => { const ano = $('#ano'); if (ano) ano.textContent = new Date().getFullYear(); })();

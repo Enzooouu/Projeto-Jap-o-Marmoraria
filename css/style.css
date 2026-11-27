@@ -491,49 +491,68 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   .opcoes-grade { grid-template-columns: 1fr 1fr; }
 }
 
-/* ---------- 6 e 7. por que a Japão + Google ---------- */
-.porque {
-  display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px;
-  padding-left: var(--m); padding-right: var(--m);
-  overflow: hidden;
-}
-.porque > * { min-width: 0; }
-.porque-texto { grid-column: 1 / 7; padding-bottom: clamp(80px, 10vw, 160px); }
-@media (min-width: 1537px) { .porque-texto { padding-left: calc((100vw - var(--max)) / 2 - var(--m)); } }
-.porque .lead { color: var(--paper); }
-.razoes { margin-top: clamp(40px, 5vw, 72px); display: grid; gap: 36px; }
-.razoes h3 { font-size: var(--step-title); color: var(--gold-soft); }
-.razoes p { margin-top: 8px; max-width: 40ch; color: #E6E6E3; }
+/* ---------- 6 e 7. avaliações, prêmio e por que a Japão ---------- */
+.porque { padding-bottom: clamp(80px, 10vw, 160px); overflow: hidden; }
+.porque-cabeca { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
+.porque-cabeca h2 { grid-column: 1 / 7; }
+.porque-cabeca .lead { grid-column: 8 / 13; margin-top: 0; color: var(--paper); }
 
-.cartao-google-area { grid-column: 8 / 13; position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(48px, 6vw, 80px); }
-.premio { display: flex; align-items: center; gap: 24px; max-width: 460px; margin-left: auto; width: 100%; }
-.estatueta { flex: none; width: 92px; height: auto; color: var(--gold); }
-.premio h3 { font-size: var(--step-title); color: var(--paper); }
-.premio p { margin-top: 8px; color: #E6E6E3; }
-.link-claro { color: var(--gold); }
-.link-claro:hover { color: var(--paper); }
-.cartao-google {
-  --pad: clamp(28px, 4vw, 56px);
-  width: 100%; max-width: 460px; margin-left: auto;
-  background: var(--paper); color: var(--ink);
-  padding: var(--pad) var(--pad) calc(var(--pad) + 64px);
-  border-radius: var(--r-panel);
-  transform: rotate(-1.5deg) translateY(40px); transform-origin: bottom center;
-  text-align: center;
+/* fileira que gira sem parar (fica 2x mais lenta com o mouse em cima) */
+.avaliacoes { margin: clamp(40px, 5vw, 72px) calc(-1 * var(--m)) 0; overflow: hidden; }
+.avaliacoes-trilho { display: flex; gap: 16px; width: max-content; padding: 4px 0; will-change: transform; }
+.aval {
+  --pad: 22px;
+  flex: none; width: clamp(260px, 26vw, 340px);
+  display: flex; flex-direction: column; gap: 10px;
+  background: var(--dark-2); color: var(--paper);
+  padding: var(--pad); border-radius: calc(var(--r-img) + 6px);
 }
-.cartao-google-rotulo { font-size: var(--step-body); font-weight: 500; }
-.nota-grande { font-size: clamp(6rem, 3.5rem + 7vw, 10rem); line-height: .9; margin-top: 18px; letter-spacing: -0.02em; }
-.estrelas-grandes { justify-content: center; margin-top: 14px; gap: 6px; }
-.estrelas-grandes svg { width: 30px; height: 30px; }
-.nota-total { margin-top: 14px; font-size: var(--step-lead); }
-.cartao-google .botao { margin-top: 28px; }
+.aval-estrelas { display: flex; gap: 3px; color: var(--gold); }
+.aval-estrelas svg { width: 16px; height: 16px; }
+.aval-titulo { font-family: var(--font-display); font-weight: 400; font-size: 1.35rem; line-height: 1.2; }
+.aval-texto { color: #E6E6E3; font-size: 1rem; line-height: 1.5; }
+.aval-fonte { margin-top: auto; padding-top: 6px; font-size: var(--step-small); color: #B9B7B1; }
+
+/* cartão único: prêmio + nota do Google */
+.selos { max-width: var(--max); margin: clamp(48px, 6vw, 88px) auto 0; }
+.selo-cartao {
+  --pad: clamp(24px, 3.5vw, 48px);
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); align-items: center;
+  background: var(--paper); color: var(--ink);
+  padding: var(--pad); border-radius: calc(var(--r-img) + 24px);
+}
+.selo-premio { display: flex; align-items: center; gap: clamp(18px, 2.5vw, 32px); }
+.selo-premio .estatueta { flex: none; width: clamp(64px, 6vw, 96px); height: auto; color: var(--gold); }
+.selo-premio .estatueta .base { fill: var(--ink); }    /* base escura sobre o cartão claro */
+.selo-premio h3 { font-size: var(--step-title); }
+.selo-premio p { margin-top: 8px; color: var(--muted); }
+.selo-premio .link { margin-top: 4px; }
+.selo-google {
+  --pad2: clamp(18px, 2.5vw, 28px);
+  display: flex; align-items: center; gap: clamp(18px, 2.5vw, 32px);
+  background: var(--surface); padding: var(--pad2); border-radius: 24px;   /* raio interno: o cartão de fora tem 36px */
+}
+.selo-google .nota-grande { font-size: clamp(4.5rem, 3rem + 4vw, 7.5rem); line-height: .9; margin: 0; }
+.selo-google .estrelas-grandes { justify-content: flex-start; margin: 0; }
+.selo-google .nota-total { margin-top: 8px; font-size: var(--step-body); }
+.selo-google .botao { margin-top: 16px; }
+
+/* por que a Japão: faixa curta embaixo */
+.porque-japao { max-width: var(--max); margin: clamp(56px, 7vw, 104px) auto 0; }
+.porque-japao h3 { font-size: var(--step-title); color: var(--gold-soft); }
+.porque-japao .razoes { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 48px); }
+.porque-japao h4 { margin: 0; font-family: var(--font-text); font-weight: 500; font-size: var(--step-body); }
+.porque-japao .razoes p { margin-top: 6px; color: #E6E6E3; max-width: 36ch; }
 
 @media (max-width: 860px) {
-  .porque { display: block; }
-  .porque-texto { padding-bottom: 64px; }
-  .cartao-google { max-width: none; margin: 0 auto; transform: rotate(-1deg) translateY(24px); }
-  .premio { max-width: none; margin: 0 0 48px; }
-  .estatueta { width: 60px; }
+  .porque-cabeca { display: block; }
+  .porque-cabeca .lead { margin-top: 16px; }
+  .selo-cartao { grid-template-columns: 1fr; }
+  .porque-japao .razoes { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .selo-premio { align-items: flex-start; }
+  .selo-google { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
 
 /* ---------- 8. como funciona ---------- */
