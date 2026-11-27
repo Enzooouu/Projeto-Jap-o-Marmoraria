@@ -373,7 +373,10 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .mosaico {
   display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(24px, 4vw, 64px);
   align-items: stretch;
-  height: clamp(980px, 150svh, 1500px);   /* a galeria inteira cabe em cerca de 2 telas */
+  height: clamp(760px, 112svh, 1180px);   /* mais baixa: a galeria inteira cabe em cerca de 1,5 a 2 telas */
+  /* mais larga que o resto do conteúdo: ocupa a tela quase toda, com a mesma margem das bordas */
+  width: min(calc(100vw - 2 * var(--m)), 1760px);
+  margin-left: 50%; transform: translateX(-50%);
   margin-top: clamp(40px, 5vw, 72px);
 }
 .coluna { display: flex; flex-direction: column; gap: clamp(28px, 5svh, 56px); min-height: 0; }
@@ -388,7 +391,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 /* a primeira foto de cada coluna tem um tamanho; a de baixo cresce até o fim da coluna */
 .coluna > .obra:first-child { flex: none; }
 .m-a .obra-foto { aspect-ratio: 4 / 3; }
-.m-b .obra-foto { aspect-ratio: 4 / 5; }
+.m-b .obra-foto { aspect-ratio: 1 / 1; }
 .m-c .obra-foto { aspect-ratio: 5 / 4; }
 .coluna > .obra:last-child { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .coluna > .obra:last-child .obra-foto { flex: 1; min-height: 160px; }
@@ -397,7 +400,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 @media (max-width: 860px) {
   .trabalhos-cabeca { display: block; }
   .trabalhos-intro { margin-top: 20px; }
-  .mosaico { height: auto; grid-template-columns: 1fr 1fr; column-gap: 14px; row-gap: 28px; align-items: start; }
+  .mosaico { height: auto; width: auto; margin-left: 0; transform: none; grid-template-columns: 1fr 1fr; column-gap: 14px; row-gap: 28px; align-items: start; }
   .coluna { display: contents; }
   .mosaico .obra { display: block; }
   .mosaico .obra-foto { aspect-ratio: 3 / 4; }
