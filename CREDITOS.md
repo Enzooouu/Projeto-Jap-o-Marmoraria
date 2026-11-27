@@ -54,3 +54,8 @@ Nenhuma é obra da Japão. Troque cada uma por uma foto real de obra feita naque
 | Arquivo | Onde está | O que mostra |
 | --- | --- | --- |
 | `img/fotos/rodape-detalhes.webp` | Rodapé | Porta-copos e tábuas em granito preto |
+| `img/fotos/obra-pia-sao-gabriel.webp` | Serviços › Pias | Bancada em Preto São Gabriel com duas cubas (área gourmet) |
+| `img/fotos/obra-gourmet-sao-gabriel.webp` | Serviços › Bancadas | Área gourmet em Preto São Gabriel, acabamento 45° |
+| `img/fotos/obra-lavatorio-pitaya.webp` | Serviços › Banheiros | Lavatório em Granito Pitaya com cuba esculpida |
+| `img/fotos/obra-quartzo-renault.webp` | Serviços › Balcões | Bancada em Quartzo Branco, loja Renault Piracicaba |
+| `img/fotos/obra-sao-gabriel-slim.webp` | Como funciona › Instalação | Preto São Gabriel escovado, acabamento slim |
