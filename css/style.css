@@ -210,7 +210,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   padding: clamp(24px, 4vw, 56px) max(var(--m), calc((100vw - var(--max)) / 2)) calc(clamp(32px, 5vw, 72px) + var(--r-panel) + 16px);
   color: var(--paper);
 }
-.hero h1 { font-size: var(--step-hero); max-width: 12ch; line-height: .98; }
+.hero h1 { font-size: var(--step-hero); max-width: 17ch; line-height: .98; }
 .hero-apoio { font-size: var(--step-lead); line-height: 1.45; max-width: 40ch; margin-top: clamp(20px, 2.4vw, 36px); }
 .hero-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: clamp(24px, 3vw, 40px); }
 .hero-nota { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--paper); text-decoration: none; font-size: var(--step-small); }
@@ -615,7 +615,7 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
 .cartao-acoes { display: grid; gap: 8px; margin-top: 20px; }
 @media (max-width: 860px) {
   .mapa { height: 62svh; min-height: 360px; }
-  .cartao-visita { position: relative; top: auto; left: auto; width: auto; margin: -80px 12px 0; --pad: 24px; }
+  .cartao-visita { position: relative; top: auto; left: auto; right: auto; width: auto; margin: -80px 12px 0; --pad: 24px; }
 }
 
 /* ---------- 11. rodapé ---------- */
@@ -722,3 +722,35 @@ h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; line
   .faixa-trilho { transform: translateX(-10%); }
   .js .revelar { opacity: 1; transform: none; }
 }
+
+/* ---------- perguntas frequentes ---------- */
+.faq-cabeca { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
+.faq-cabeca h2 { grid-column: 1 / 7; }
+.faq-cabeca .lead { grid-column: 8 / 13; margin-top: 0; }
+.faq-lista { margin-top: clamp(32px, 4vw, 56px); display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+.faq-item {
+  --pad: clamp(18px, 2vw, 26px);
+  background: var(--surface); border-radius: calc(var(--r-img) + 8px);
+  padding: 0 var(--pad);
+}
+.faq-item summary {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  min-height: 64px; padding: 14px 0; cursor: pointer; list-style: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary h3 { font-family: var(--font-text); font-weight: 500; font-size: var(--step-body); line-height: 1.35; }
+.faq-item summary::after {
+  content: "+"; flex: none; width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--paper); font-size: 1.25rem; line-height: 1;
+  transition: transform .25s var(--ease);
+}
+.faq-item[open] summary::after { transform: rotate(45deg); background: var(--gold); }
+.faq-item p { padding-bottom: var(--pad); max-width: 62ch; }
+@media (max-width: 860px) {
+  .faq-cabeca { display: block; }
+  .faq-cabeca .lead { margin-top: 16px; }
+  .faq-lista { grid-template-columns: 1fr; }
+}
+
+/* legendas das pedras das laterais ficam escondidas (só a do meio é lida) */
+.slide:not(.ativo) .slide-obra figcaption { visibility: hidden; }

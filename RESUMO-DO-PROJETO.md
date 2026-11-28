@@ -50,3 +50,10 @@ Use este texto para continuar o trabalho em outra conta ou conversa. Cole ele no
 
 ## Preço discutido
 - Faixa sugerida R$ 1.800 a R$ 2.500 + manutenção opcional R$ 100 a R$ 150/mês; o dono do projeto pensou em R$ 1.120 como preço de entrada (ok para primeiro cliente, com escopo e rodadas de ajuste combinados por escrito).
+
+## SEO local e GEO (aplicado)
+- Título e description com serviço + cidade; H1 "Granito e mármore em Piracicaba"; canônica, Open Graph e Twitter Card (img/og-imagem.jpg).
+- JSON-LD @graph: HomeAndConstructionBusiness + WebSite + FAQPage.
+- Seção "Perguntas frequentes" (#duvidas), robots.txt, sitemap.xml, llms.txt, netlify.toml.
+- Telefone fixo (19) 3422-8887 (visto nos posts do Instagram). Endereço padronizado: "R. Antônio Bacchi, 1136 - Paulicéia, Piracicaba - SP".
+- Checklist para os próximos sites: CHECKLIST-SEO-GEO.md.

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# robôs de IA também podem ler o site
+User-agent: GPTBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: https://publish-website-6bdec8.netlify.app/sitemap.xml

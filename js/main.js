@@ -35,6 +35,17 @@ const TAMANHOS = {
 };
 
 document.documentElement.classList.add('js');
+
+/* roda uma animação só enquanto o elemento está na tela (economiza bateria e deixa o site leve) */
+function animarQuandoVisivel(el, tick) {
+  let id = 0, antes = 0;
+  const quadro = (agora) => { const dt = Math.min((agora - antes) / 1000, 0.05); antes = agora; tick(dt); id = requestAnimationFrame(quadro); };
+  const ligar = () => { if (!id) { antes = performance.now(); id = requestAnimationFrame(quadro); } };
+  const desligar = () => { cancelAnimationFrame(id); id = 0; };
+  if (!('IntersectionObserver' in window)) { ligar(); return; }
+  new IntersectionObserver(([e]) => (e.isIntersecting ? ligar() : desligar()), { rootMargin: '100px' }).observe(el);
+  document.addEventListener('visibilitychange', () => (document.hidden ? desligar() : null));
+}
 const reduzir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -207,22 +218,18 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
     ir(slides.indexOf(sl) - i);
   }, true);
 
-  let antes = performance.now();
-  const relogio = (agora) => {
-    const dt = agora - antes; antes = agora;
-    if (!parado) {
-      progresso += (dt / INTERVALO) * (devagar ? LENTO : 1);
-      if (progresso >= 1) ir(1);
-      tempoEl.style.transform = `scaleX(${Math.min(progresso, 1)})`;
-    }
-    requestAnimationFrame(relogio);
+  const relogio = (dt) => {
+    if (parado) return;
+    progresso += (dt * 1000 / INTERVALO) * (devagar ? LENTO : 1);
+    if (progresso >= 1) ir(1);
+    tempoEl.style.transform = `scaleX(${Math.min(progresso, 1)})`;
   };
 
   vitrine.addEventListener('mouseenter', () => { devagar = true; });
   vitrine.addEventListener('mouseleave', () => { devagar = false; });
   vitrine.addEventListener('focusin', () => { devagar = true; });
   vitrine.addEventListener('focusout', () => { devagar = false; });
-  document.addEventListener('visibilitychange', () => { parado = document.hidden; antes = performance.now(); });
+  document.addEventListener('visibilitychange', () => { parado = document.hidden; });
 
   $('#vitrine-proxima').addEventListener('click', () => ir(1));
   $('#vitrine-anterior').addEventListener('click', () => ir(-1));
@@ -243,7 +250,7 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   posicionar(false);
   // fontes e imagens podem mudar a largura depois de carregar
   window.addEventListener('load', () => posicionar(false));
-  requestAnimationFrame(relogio);
+  animarQuandoVisivel(vitrine, relogio);
 })();
 
 /* ---------- zoom: toda imagem abre ampliada, com zoom e arraste ---------- */
@@ -598,24 +605,18 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
     ultimoY = y;
   }, { passive: true });
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }).observe(faixa);
-  }
-
-  function passo(agora) {
-    const dt = Math.min((agora - antes) / 1000, 0.05);
-    antes = agora;
-    if (visivel) {
-      const metade = trilho.scrollWidth / 2;  // o texto está duplicado: ao andar meia faixa, volta ao início sem emenda
-      x += direcao * (BASE + extra) * dt;
-      if (x <= -metade) x += metade;
-      if (x > 0) x -= metade;
-      trilho.style.transform = `translate3d(${x}px, 0, 0)`;
-    }
+  let metade = 0;   // o texto está duplicado: ao andar meia faixa, volta ao início sem emenda
+  const medir = () => { metade = trilho.scrollWidth / 2; };
+  window.addEventListener('resize', medir);
+  window.addEventListener('load', medir);
+  animarQuandoVisivel(faixa, (dt) => {
+    if (!metade) medir();
+    x += direcao * (BASE + extra) * dt;
+    if (x <= -metade) x += metade;
+    if (x > 0) x -= metade;
+    trilho.style.transform = `translate3d(${x}px, 0, 0)`;
     extra *= Math.pow(0.04, dt); // o empurrão some aos poucos
-    requestAnimationFrame(passo);
-  }
-  requestAnimationFrame(passo);
+  });
 })();
 
 /* ---------- galeria: as legendas de baixo ficam com a mesma altura,
@@ -632,7 +633,6 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   window.addEventListener('resize', igualar);
   window.addEventListener('load', igualar);
   if (document.fonts) document.fonts.ready.then(igualar);
-  igualar();
 })();
 
 /* ---------- fileira de avaliações: gira sem parar, 2x mais lenta com o mouse em cima ---------- */
@@ -644,18 +644,16 @@ function trilho(trilhoEl, barraEl, botoes, aoMudar) {
   let x = 0, lento = false, visivel = true, antes = performance.now();
   faixa.addEventListener('mouseenter', () => { lento = true; });
   faixa.addEventListener('mouseleave', () => { lento = false; });
-  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }).observe(faixa);
-  const passo = (agora) => {
-    const dt = Math.min((agora - antes) / 1000, 0.05); antes = agora;
-    if (visivel) {
-      const metade = trilhoEl.scrollWidth / 2;
-      x -= VELOCIDADE * (lento ? 0.5 : 1) * dt;
-      if (x <= -metade) x += metade;
-      trilhoEl.style.transform = `translate3d(${x}px, 0, 0)`;
-    }
-    requestAnimationFrame(passo);
-  };
-  requestAnimationFrame(passo);
+  let metade = 0;
+  const medir = () => { metade = trilhoEl.scrollWidth / 2; };
+  window.addEventListener('resize', medir);
+  window.addEventListener('load', medir);
+  animarQuandoVisivel(faixa, (dt) => {
+    if (!metade) medir();
+    x -= VELOCIDADE * (lento ? 0.5 : 1) * dt;
+    if (x <= -metade) x += metade;
+    trilhoEl.style.transform = `translate3d(${x}px, 0, 0)`;
+  });
 })();
 
 /* ---------- ano no rodapé ---------- */
